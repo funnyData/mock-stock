@@ -4,6 +4,9 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+    <listener>
+        <listener-class>com.longone.broker.server.ContextListener</listener-class>
+    </listener>
 
     <!-- Servlets -->
     <servlet>
@@ -12,13 +15,13 @@
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>com.longone.broker.MockStock StockPriceService</servlet-name>
-        <servlet-class>com.longone.broker.server.StockPriceServiceImpl</servlet-class>
+        <servlet-name>com.longone.broker.MockStock StockService</servlet-name>
+        <servlet-class>com.longone.broker.server.StockServiceImpl</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>com.longone.broker.MockStock StockPriceService</servlet-name>
-        <url-pattern>/mockstock/stockPrices</url-pattern>
+        <servlet-name>com.longone.broker.MockStock StockService</servlet-name>
+        <url-pattern>/mockstock/stockPositions</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->
