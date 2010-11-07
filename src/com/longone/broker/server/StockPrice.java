@@ -1,8 +1,7 @@
-package com.longone.broker.client;
+package com.longone.broker.server;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class StockPrice implements IsSerializable {
+public class StockPrice {
     private String code;
     private String name;
     private double price;

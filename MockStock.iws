@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="7a53af46-36fc-4bda-969c-d50217b5f2e5" name="Default" comment="" />
+    <list default="true" readonly="true" id="7a53af46-36fc-4bda-969c-d50217b5f2e5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java" />
+      <change type="DELETED" beforePath="G:\home\projects\mockStock\mock-stock\src\com\longone\broker\client\StockPrice.java" afterPath="" />
+      <change type="MOVED" beforePath="G:\home\projects\mockStock\mock-stock\src\com\longone\broker\server\StockPriceServiceImpl.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/StockServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java" />
+      <change type="MOVED" beforePath="G:\home\projects\mockStock\mock-stock\src\com\longone\broker\client\StockPriceServiceAsync.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/StockServiceAsync.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/PasswordResetPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/longone/broker/server/InitServlet.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/InitServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/DbManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/StockPosition.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/DealLog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/war/MockStock.html" afterPath="$PROJECT_DIR$/war/MockStock.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MockStock.ipr" afterPath="$PROJECT_DIR$/MockStock.ipr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/ProfitPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MockStock.iml" afterPath="$PROJECT_DIR$/MockStock.iml" />
+      <change type="MOVED" beforePath="G:\home\projects\mockStock\mock-stock\src\com\longone\broker\client\StockPriceService.java" afterPath="$PROJECT_DIR$/src/com/longone/broker/client/StockService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/war/WEB-INF/config.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/war/MockStock.css" afterPath="$PROJECT_DIR$/war/MockStock.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/war/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/war/WEB-INF/web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/table.sql" afterPath="$PROJECT_DIR$/table.sql" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/StockPrice.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/war/WEB-INF/log4j.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/longone/broker/server/ContextListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MockStock.iws" afterPath="$PROJECT_DIR$/MockStock.iws" />
+    </list>
     <ignored path="MockStock.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,19 +85,92 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MockStock.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java">
+      <file leaf-file-name="StockServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/StockServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="55" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
+            <state line="118" column="88" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="table.sql" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/table.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="0" selection-start="1270" selection-end="1270" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="table.sql" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/table.sql">
+      <file leaf-file-name="DBFReaderThread.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="0" selection-start="725" selection-end="725" vertical-scroll-proportion="1.1938958">
+            <state line="103" column="86" selection-start="3699" selection-end="3699" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MockStock.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="216" column="83" selection-start="8099" selection-end="8113" vertical-scroll-proportion="-18.6">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfitPanel.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/ProfitPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="54" column="87" selection-start="2373" selection-end="2373" vertical-scroll-proportion="2.1189592">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DealLog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/DealLog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="56" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PasswordResetPanel.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/PasswordResetPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="66" selection-start="1575" selection-end="2226" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockServiceAsync.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockServiceAsync.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="53" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="24" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -88,22 +186,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockAsync.java" />
         <option value="$PROJECT_DIR$/war/MockStock.html" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/client/SotckPrice.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/server/StockPriceService.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockPriceServiceAsync.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockPriceService.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/MockStock.gwt.xml" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/server/DBFReader.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockPrice.java" />
-        <option value="$PROJECT_DIR$/war/MockStock.css" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/server/StockPriceServiceImpl.java" />
-        <option value="$PROJECT_DIR$/build.xml" />
-        <option value="$PROJECT_DIR$/war/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/com/longone/broker/server/InitServlet.java" />
+        <option value="$PROJECT_DIR$/war/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/server/DbManager.java" />
         <option value="$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java" />
-        <option value="$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java" />
+        <option value="$PROJECT_DIR$/war/MockStock.css" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockPosition.java" />
         <option value="$PROJECT_DIR$/table.sql" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockServiceAsync.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/PasswordResetPanel.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/DealLog.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/StockService.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/server/StockServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/longone/broker/client/ProfitPanel.java" />
       </list>
     </option>
   </component>
@@ -145,123 +243,12 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="war" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="war" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="broker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="broker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MockStock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="broker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane />
       </pane>
       <pane id="Favorites" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -272,6 +259,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -279,7 +267,12 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.DBFReaderThread">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.longone.broker.client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.StockServiceImpl">
     <configuration default="false" name="MockStock.html" type="JavascriptDebugSession" factoryName="Local" temporary="true">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
@@ -315,6 +308,29 @@
       </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="StockServiceImpl" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false">
+        <pattern>
+          <option name="PATTERN" value="com.longone.broker.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <option name="MAIN_CLASS_NAME" value="com.longone.broker.server.StockServiceImpl" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="MockStock" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -487,9 +503,10 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.MockStock.html" />
       <item index="1" class="java.lang.String" itemvalue="Application.DBFReaderThread" />
+      <item index="2" class="java.lang.String" itemvalue="Application.StockServiceImpl" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -513,6 +530,24 @@
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
     <supportedVersion>125</supportedVersion>
   </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="G:\home\projects\mockStock\mock-stock" />
+          <option name="myCopyRoot" value="G:\home\projects\mockStock\mock-stock" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="G:\home\projects\mockStock\mock-stock" />
+          <option name="myCopyRoot" value="G:\home\projects\mockStock\mock-stock" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7a53af46-36fc-4bda-969c-d50217b5f2e5" name="Default" comment="" />
@@ -521,29 +556,49 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1040" height="744" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.61785716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41190475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22142857" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21309523" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297619" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2595238" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26488706" sideWeight="0.8107143" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21769297" sideWeight="0.7044146" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18095239" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19642857" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -559,7 +614,7 @@
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="LAST_COMMIT_MESSAGE" value="add &quot;position tab&quot;, &quot;transaction history tab&quot; and &quot;resetPassword tab&quot;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -572,6 +627,7 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="add &quot;position tab&quot;, &quot;transaction history tab&quot; and &quot;resetPassword tab&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -581,52 +637,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockPriceService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockPrice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="1299" selection-end="1299" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockPriceServiceAsync.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="39" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/MockStock.gwt.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="62" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/war/MockStock.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="9" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="60" selection-start="280" selection-end="280" vertical-scroll-proportion="76.73077" />
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/war/WEB-INF/lib/dans-dbf-lib-1.0.0-beta-08.jar!/nl/knaw/dans/common/dbflib/Record.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="18" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaEE/lib/javaee-impl.jar!/standardSchemas/web-app_2_3.dtd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="536" column="10" selection-start="17307" selection-end="17307" vertical-scroll-proportion="0.65839696" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/war/WEB-INF/web.xml">
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="14" selection-start="413" selection-end="413" vertical-scroll-proportion="-11.4" />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
         <state />
@@ -634,33 +647,124 @@
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/InitServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="51" selection-start="525" selection-end="525" vertical-scroll-proportion="0.0" />
+        <state line="7" column="57" selection-start="263" selection-end="263" vertical-scroll-proportion="-6.65">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/StockPriceServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockPosition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="10" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0" />
+        <state line="29" column="28" selection-start="630" selection-end="630" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java">
+    <entry file="file://$PROJECT_DIR$/war/MockStock.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="49" selection-start="1034" selection-end="1034" vertical-scroll-proportion="-1.7343173" />
+        <state line="23" column="23" selection-start="414" selection-end="436" vertical-scroll-proportion="0.54968554">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java">
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/DbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="55" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
+        <state line="93" column="52" selection-start="2904" selection-end="2904" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0/gwt-user.jar!/com/google/gwt/user/client/ui/HTMLTable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="57" selection-start="1907" selection-end="1907" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0/gwt-user.jar!/com/google/gwt/user/client/ui/Grid.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="11" selection-start="446" selection-end="446" vertical-scroll-proportion="0.35569423">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0/gwt-user.jar!/com/google/gwt/user/client/ui/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="245" column="14" selection-start="6466" selection-end="6466" vertical-scroll-proportion="6.8096724">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/table.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="725" selection-end="725" vertical-scroll-proportion="1.1938958">
+        <state line="51" column="0" selection-start="1270" selection-end="1270" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockServiceAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="53" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/StockService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="24" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/DealLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="56" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/DBFReaderThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="86" selection-start="3699" selection-end="3699" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/PasswordResetPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="66" selection-start="1575" selection-end="2226" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/server/StockServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="88" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/MockStock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="216" column="83" selection-start="8099" selection-end="8113" vertical-scroll-proportion="-18.6">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/longone/broker/client/ProfitPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="87" selection-start="2373" selection-end="2373" vertical-scroll-proportion="2.1189592">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -674,10 +778,12 @@
               <option name="proportions">
                 <list>
                   <option value="0.2" />
+                  <option value="0.5" />
                 </list>
               </option>
             </SplitterProportionsDataImpl>
           </splitter-proportions>
+          <last-edited>MockStock:GWT</last-edited>
           <settings />
         </UIState>
       </state>

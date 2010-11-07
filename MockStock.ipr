@@ -3,6 +3,14 @@
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
+  <component name="ArtifactManager">
+    <artifact name="MockStock:GWT">
+      <output-path>$PROJECT_DIR$/out/artifacts/MockStock_GWT</output-path>
+      <root id="root">
+        <element id="gwt-compiler-output" facet="MockStock/gwt/GWT" />
+      </root>
+    </artifact>
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions>
@@ -180,7 +188,7 @@
             <setting name="additionalCompilerParameters" value="" />
             <setting name="compilerMaxHeapSize" value="128" />
             <setting name="gwtScriptOutputStyle" value="DETAILED" />
-            <setting name="gwtSdkUrl" value="file://$PROJECT_DIR$/../gwt-2.1.0" />
+            <setting name="gwtSdkUrl" value="file://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0" />
           </configuration>
         </default-facet-configuration>
       </entry>
@@ -198,17 +206,21 @@
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
+    <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
     <library name="gwt-user">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/dans-dbf-lib-1.0.0-beta-08.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gwt-2.1.0/gwt-user.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0/gwt-user.jar!/" />
+        <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/sqljdbc4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/war/WEB-INF/lib/log4j-1.2.14.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/../../../software/developTool/gwt-2.1.0/gwt-user.jar!/" />
+      </SOURCES>
     </library>
   </component>
 </project>
