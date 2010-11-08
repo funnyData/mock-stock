@@ -86,6 +86,7 @@ public class LoginPanel extends DecoratorPanel {
         tabPanel.setAnimationEnabled(true);
         tabPanel.add(new PositionPanel(stockSvc), "持仓");
         tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
+        tabPanel.add(new AccountPanel(stockSvc), "账户");
         tabPanel.add(new PasswordResetPanel(stockSvc), "修改密码");
 
         // lazy loading
