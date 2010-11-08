@@ -4,6 +4,7 @@ create table users (
   password varchar(255),
   superuser char(1),
   principal float,
+  initialPrincipal float,
   startDate datetime,
   endDate datetime,
   enabled char(1)
@@ -21,9 +22,10 @@ create table positions (
   amount int,
   cost float,
   commission float,
-  realProfit float default 0,
-  lastAmount float default 0,
-  userid varchar(255)
+  profit float,
+  userid varchar(255),
+  created datetime,
+  modified datetime
 );
 
 /*
@@ -41,8 +43,8 @@ create table dealLogs (
   created datetime
 );
 
-insert into users(username, password, superuser, principal, startDate, endDate, enabled)
-values('wfei', 'test', 'Y', 1000000, '2010-11-06', null, 'Y');
+insert into users(username, password, superuser, principal, initialPrincipal, startDate, endDate, enabled)
+values('wfei', 'test', 'Y', 1000000, 1000000, '2010-11-06', null, 'Y');
 
 insert into positions (code,name, amount,cost, commission, userid)
 values('600710', '常林股份', 15000, 8.39, 880.95, 'wfei');
