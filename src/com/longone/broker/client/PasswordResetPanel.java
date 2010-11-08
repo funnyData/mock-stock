@@ -51,8 +51,12 @@ public class PasswordResetPanel extends VerticalPanel {
                         }
 
                         public void onSuccess(String s) {
-                            Window.alert(s);
-                            resetFields();
+                            if (s == null) {
+                                Window.alert(MockStock.SESSION_TIMEOUT_MSG);
+                            } else {
+                                Window.alert(s);
+                                resetFields();
+                            }
                         }
                     };
                     // Make the call to the stock price service.

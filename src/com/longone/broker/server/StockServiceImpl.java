@@ -1,11 +1,11 @@
 package com.longone.broker.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.longone.broker.client.DealLog;
-import com.longone.broker.client.StockPosition;
-import com.longone.broker.client.StockService;
+import com.longone.broker.client.*;
+import com.longone.broker.servlet.InitServlet;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,17 +18,23 @@ import java.util.List;
 
 public class StockServiceImpl extends RemoteServiceServlet implements StockService {
     private static final Logger logger = Logger.getLogger(StockServiceImpl.class);
-    private static double COMMISSION_PERCENTAGE = 0.003;
-    private static String SYS_ERROR = "系统出错，请联系管理员";
+    private static final double COMMISSION_PERCENTAGE = 0.003;
+    private static final String SYS_ERROR = "系统出错，请联系管理员";
+    private static final String USER = "USER_SESSION_ATTR";
 
     public StockPosition[] getStockPositions() {
-        String user = getCurrentUser();
-
-        return queryPosition(user);
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
+        return ProfitCalculator.queryPosition(user.getUsername());
     }
 
     public String placeOrder(String code, int amount, boolean isBuy) {
-        String user = getCurrentUser();
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
 
         logger.info("place order (" + code + ", " + amount + "," + isBuy + ")");
         // check if stock code is correct
@@ -40,37 +46,47 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
 
         // check if amount or principal is enough
         double currentPrice = stockPrice.getPrice();
-        double buyExpense = currentPrice * amount * (1 + COMMISSION_PERCENTAGE);
-        double principal = queryPrincipal(user);
-        StockPosition position = queryPositionByCode(code, user);
+        double buyExpense = BigDecimal.valueOf(currentPrice).multiply(BigDecimal.valueOf(amount))
+                .multiply(BigDecimal.valueOf(1 + COMMISSION_PERCENTAGE)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double principal = queryPrincipal(user.getUsername());
+        StockPosition position = queryPositionByCode(code, user.getUsername());
         position.setName(stockPrice.getName());
+
+        logger.debug("Try buy/sell stock: " + code);
+        logger.debug("principal: " + principal);
+        logger.debug("buyExpense: " + buyExpense);
+        logger.debug("currentPrice: " + currentPrice + ", amount:" + amount);
+        logger.debug("=================================================");
         if (isBuy && buyExpense > principal) {
             logger.info("currentPrice: " + currentPrice + "amount:" + amount + " principal:" + principal);
             logger.info("principal is not enough for this order");
-            return "金额不足！！！";
+            return "金额不足！！！(可用资金:￥" + principal + ")";
         } else if (!isBuy && amount > position.getAmount()) {
             logger.info("position amount: " + position.getAmount() + "amount:" + amount + " principal:" + principal);
             logger.info("position amount is not enough for this order");
-            return "股票数量不足！！！";
+            return "股票数量不足！！！(可卖出股数:" + amount + ")";
         }
 
         // start deal
-        return insertDeal(user, position, currentPrice, amount, isBuy, principal);
+        return insertDeal(user.getUsername(), position, currentPrice, amount, isBuy, principal);
     }
 
-    private String getCurrentUser() {
-        return "wfei";
+    private User getCurrentUser() {
+        HttpSession session = this.getThreadLocalRequest().getSession();
+        return (User) session.getAttribute(USER);
     }
 
     public String resetPassword(String password) {
-        String user = getCurrentUser();
-        String sql = "update users set password = '" + password + "' where username='" + user + "'";
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
+        String sql = "update users set password = '" + password + "' where username='" + user.getUsername() + "'";
         DbManager manager = InitServlet.getManager();
-        String error;
         try {
             int count = manager.insertOrUpdate(sql);
             if (count != 1) {
-                logger.error("failed to update password for " + user);
+                logger.error("failed to update password for " + user.getUsername());
                 logger.error("reset password is " + password);
                 return SYS_ERROR;
             }
@@ -82,7 +98,12 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
     }
 
     public DealLog[] getDealLogs() {
-        String sql = "select * from dealLogs where userid = '" + getCurrentUser() + "' order by id desc";
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
+
+        String sql = "select * from dealLogs where userid = '" + user.getUsername() + "' order by id desc";
         DbManager manager = InitServlet.getManager();
         List<DealLog> list = new ArrayList<DealLog>();
         try {
@@ -109,10 +130,48 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return logs;
     }
 
-    private String insertDeal(String user, StockPosition position, double currentPrice, int amount,
-                              boolean buy, double principal) {
+    public User login(String username, String password) {
+        String sql = "select * from users where enabled = 'Y' and username = '" + username + "'";
+        DbManager manager = InitServlet.getManager();
+        try {
+            ResultSet set = manager.query(sql);
+            if (set.next()) {
+                if (password.equals(set.getString("password"))) {
+                    User user = new User();
+                    user.setUsername(set.getString("username"));
+                    user.setSuperUser(set.getString("superuser"));
+                    user.setStartDate(set.getDate("startDate"));
+                    user.setEndDate(set.getDate("endDate"));
+                    user.setPrincipal(set.getDouble("principal"));
+                    user.setInitialPrincipal(set.getDouble("initialPrincipal"));
 
-        double commission = currentPrice * amount * COMMISSION_PERCENTAGE;
+                    HttpSession session = this.getThreadLocalRequest().getSession();
+                    session.setAttribute(USER, user);
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return null;
+    }
+
+    public AccountInfo getAccountInfo() {
+        User user = getCurrentUser();
+        if(user == null) {
+            return null;
+        }
+        return ProfitCalculator.getAccountInfo(user);
+    }
+
+    private String insertDeal(String username, StockPosition position, double currentPrice, int amount,
+                              boolean buy, double principal) {
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String now = fmt.format(new Date());
+        // commission = currentPrice * amount * COMMISSION_PERCENTAGE
+        double commission = BigDecimal.valueOf(currentPrice).multiply(BigDecimal.valueOf(amount))
+                .multiply(BigDecimal.valueOf(COMMISSION_PERCENTAGE)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        logger.debug("commission for this deal: " + commission);
         // generate dealLogs sql
         StringBuffer dealLogsSql = new StringBuffer("insert into dealLogs (code, name, bs, price, amount, commission, userid, created) values ('");
         dealLogsSql.append(position.getCode()).append("', '");
@@ -127,9 +186,8 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         dealLogsSql.append(currentPrice).append(", ");
         dealLogsSql.append(amount).append(", ");
         dealLogsSql.append(commission).append(", '");
-        dealLogsSql.append(user).append("', '");
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dealLogsSql.append(fmt.format(new Date())).append("')");
+        dealLogsSql.append(username).append("', '");
+        dealLogsSql.append(now).append("')");
 
         double expense;
         double newPrincipal;
@@ -142,53 +200,59 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
             newPrincipal = principal + expense;
         }
         StringBuffer usersSql = new StringBuffer("update users set principal = ");
-        usersSql.append(newPrincipal).append("where username = '").append(user).append("'");
+        usersSql.append(newPrincipal).append(" where username = '").append(username).append("'");
 
         // generate positions sql
         StringBuffer positionsSql = new StringBuffer();
+
 
         if (position.getAmount() > 0) {
             double newCommission = position.getCommission() + commission;
             int newAmount;
             double newCost;
-            double realProfit = 0;
-            double lastAmount = 0;
+            double profit = 0;
             if (buy) {
                 newAmount = position.getAmount() + amount;
-                //newCost = (position.getCostPrice() * position.getAmount() + expense) / newAmount;
-                newCost = BigDecimal.valueOf(position.getCostPrice()).multiply(BigDecimal.valueOf(position.getAmount()))
-                        .add(BigDecimal.valueOf(expense)).divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                //newCost = (-1*position.getProfit() + expense) / newAmount;
+                newCost = BigDecimal.valueOf(expense).subtract(BigDecimal.valueOf(position.getProfit()))
+                        .divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                profit = position.getProfit() - expense;
             } else {
                 newAmount = position.getAmount() - amount;
-                //newCost = (position.getCostPrice() * position.getAmount() - expense) / newAmount;
+
                 if (newAmount == 0) {
                     newCost = position.getCostPrice();
-                    lastAmount = position.getAmount();
-                    realProfit = expense - (position.getCostPrice() * position.getAmount());
+                    profit = position.getProfit() + expense;
                 } else {
-                    newCost = BigDecimal.valueOf(position.getCostPrice()).multiply(BigDecimal.valueOf(position.getAmount()))
-                            .subtract(BigDecimal.valueOf(expense)).divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    //newCost = (expense + position.getProfit()) / newAmount;
+                    newCost = BigDecimal.valueOf(expense).add(BigDecimal.valueOf(position.getProfit()))
+                            .divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
                 }
             }
+            logger.debug("expense: " + expense);
             positionsSql.append("update positions set amount = ");
             positionsSql.append(newAmount).append(", cost=");
             positionsSql.append(newCost).append(", commission=");
-            positionsSql.append(newCommission).append(", realProfit=");
-            positionsSql.append(realProfit).append(", lastAmount=");
-            positionsSql.append(lastAmount).append(" where code='");
+            positionsSql.append(newCommission).append(", profit=");
+            positionsSql.append(profit).append(", modified='");
+            positionsSql.append(now).append("' where code='");
             positionsSql.append(position.getCode()).append("' and userid='");
-            positionsSql.append(user).append("'");
+            positionsSql.append(username).append("'");
         } else {
             // cost = expense / newAmount;
             double cost = BigDecimal.valueOf(expense).divide(BigDecimal.valueOf(amount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-            positionsSql.append("insert into positions(code, name, amount, cost, commission, userid) values('");
+            positionsSql.append("insert into positions(code, name, amount, cost, commission, profit,");
+            positionsSql.append("userid, created, modified) values('");
             positionsSql.append(position.getCode()).append("', '");
             positionsSql.append(position.getName()).append("', ");
             positionsSql.append(amount).append(", ");
             positionsSql.append(cost).append(", ");
-            positionsSql.append(commission).append(", '");
-            positionsSql.append(user).append("')");
+            positionsSql.append(commission).append(", ");
+            positionsSql.append(-expense).append(", '");
+            positionsSql.append(username).append("', '");
+            positionsSql.append(now).append("', '");
+            positionsSql.append(now).append("')");
         }
 
 
@@ -219,12 +283,12 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
     }
 
 
-    private StockPosition queryPositionByCode(String code, String user) {
+    private StockPosition queryPositionByCode(String code, String username) {
         StockPosition position = new StockPosition();
         position.setCode(code);
         position.setAmount(0);
 
-        String sql = "select * from positions where userid = '" + user + "' and code = '" + code + "'";
+        String sql = "select * from positions where userid = '" + username + "' and code = '" + code + "'";
         DbManager manager = InitServlet.getManager();
         try {
             ResultSet set = manager.query(sql);
@@ -232,6 +296,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 position.setCostPrice(set.getDouble("cost"));
                 position.setCommission(set.getDouble("commission"));
                 position.setAmount(set.getInt("amount"));
+                position.setProfit(set.getDouble("profit"));
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -239,8 +304,8 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return position;
     }
 
-    private double queryPrincipal(String user) {
-        String sql = "select principal from users where username = '" + user + "'";
+    private double queryPrincipal(String username) {
+        String sql = "select principal from users where username = '" + username + "'";
         DbManager manager = InitServlet.getManager();
         try {
             ResultSet set = manager.query(sql);
@@ -250,47 +315,11 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         } catch (SQLException e) {
             logger.error(e);
         }
-        logger.error(user + "not found....");
+        logger.error(username + "not found....");
         return 0;
     }
 
-    private StockPosition[] queryPosition(String user) {
-        String sql = "select * from positions where amount > 0 and userid = '" + user + "' order by id desc";
-        DbManager manager = InitServlet.getManager();
-        List<StockPosition> list = new ArrayList<StockPosition>();
-        try {
-            ResultSet set = manager.query(sql);
-            while (set.next()) {
-                StockPosition position = new StockPosition();
-                String code = set.getString("code");
-                position.setCode(code);
-                position.setName(set.getString("name"));
-                int amount = set.getInt("amount");
-                position.setAmount(amount);
-                position.setCommission(set.getDouble("commission"));
-                double cost = set.getDouble("cost");
-                position.setCostPrice(cost);
-
-                StockPrice stockPrice = DBFReaderThread.getData().get(code);
-                position.setCurrentPrice(stockPrice.getPrice());
-
-
-                // calculate profit
-                BigDecimal profit = BigDecimal.valueOf(stockPrice.getPrice()).subtract(BigDecimal.valueOf(cost)).multiply(BigDecimal.valueOf(amount));
-                position.setProfit(profit.doubleValue());
-
-                logger.debug(position.getCurrentPrice() + ", " + position.getCostPrice() + ", " + position.getCode() + ", " + position.getProfit());
-                list.add(position);
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-        }
-        StockPosition[] positions = new StockPosition[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            positions[i] = list.get(i);
-        }
-        return positions;
-    }
+    
 
 
     public static void main(String[] args) {

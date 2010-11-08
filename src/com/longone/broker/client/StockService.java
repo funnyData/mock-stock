@@ -9,4 +9,6 @@ public interface StockService extends RemoteService {
     String placeOrder(String code, int amount, boolean isBuy);
     String resetPassword(String password);
     DealLog[] getDealLogs();
+    User login(String username, String password);
+    AccountInfo getAccountInfo();
 }

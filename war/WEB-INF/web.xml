@@ -5,13 +5,13 @@
 
 <web-app>
     <listener>
-        <listener-class>com.longone.broker.server.ContextListener</listener-class>
+        <listener-class>com.longone.broker.servlet.ContextListener</listener-class>
     </listener>
 
     <!-- Servlets -->
     <servlet>
         <servlet-name>initServlet</servlet-name>
-        <servlet-class>com.longone.broker.server.InitServlet</servlet-class>
+        <servlet-class>com.longone.broker.servlet.InitServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet>
