@@ -3,6 +3,7 @@ package com.longone.broker.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -59,7 +60,13 @@ public class AccountPanel extends VerticalPanel implements Initializable {
     }
 
     private void populateGridData(AccountInfo info) {
-        
+        NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
+        grid.setWidget(1, 0, new Label(fmt.format(info.getIntialPrincipal())));
+        grid.setWidget(1, 1, new Label(fmt.format(info.getLeftCapitical())));
+        grid.setWidget(1, 2, new Label(fmt.format(info.getStockValue())));
+        grid.setWidget(1, 3, new Label(fmt.format(info.getTotalValue())));
+        grid.setWidget(1, 4, new Label(fmt.format(info.getProfit())));
+        grid.setWidget(1, 5, new Label(fmt.format(info.getProfitPct())));    
     }
 
 
