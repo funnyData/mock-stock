@@ -32,6 +32,7 @@ public class DBFReaderThread implements Runnable {
 
     public void run() {
         logger.info("Start running DBFReaderThread....");
+        int count = 0;
         while (!isStop) {
             loadFile(data, shFile, SH_FIELDS);
             loadFile(data, szFile, SZ_FIELDS);
@@ -40,7 +41,11 @@ public class DBFReaderThread implements Runnable {
             } catch (InterruptedException e) {
                 logger.error(e);
             }
-            logger.info("loading " + data.size() + " stocks from DBF....");
+            count++;
+            if(count > 200) {
+                logger.info("loading " + data.size() + " stocks from DBF....");
+                count = 0;
+            }
         }
     }
 
