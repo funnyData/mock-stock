@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.*;
 
 
 public class LoginPanel extends DecoratorPanel {
+    private Button loginBtn = new Button("登录");
     private TextBox usernameBox = new TextBox();
     private PasswordTextBox passwordBox = new PasswordTextBox();
     private StockServiceAsync stockSvc;
@@ -28,12 +29,13 @@ public class LoginPanel extends DecoratorPanel {
         layout.setHTML(2, 0, "密码:");
         layout.setWidget(2, 1, passwordBox);
 
-        Button loginBtn = new Button("登录");
+
         layout.setWidget(3, 1, loginBtn);
 
         this.setWidget(layout);
         loginBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                loginBtn.setEnabled(false);
                 login();
             }
         });
@@ -44,6 +46,7 @@ public class LoginPanel extends DecoratorPanel {
         String password = passwordBox.getText().trim();
         if ("".equals(username) || "".equals(password)) {
             Window.alert("请输入用户名和密码!!!");
+            loginBtn.setEnabled(true);
             return;
         }
 
@@ -51,6 +54,7 @@ public class LoginPanel extends DecoratorPanel {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
                 GWT.log(caught.toString());
+                loginBtn.setEnabled(true);
             }
 
             public void onSuccess(User user) {
@@ -58,6 +62,7 @@ public class LoginPanel extends DecoratorPanel {
                     Window.alert("用户名或密码错误！！！");
                     usernameBox.setText("");
                     passwordBox.setText("");
+                    loginBtn.setEnabled(true);
                     return;
                 }
 
