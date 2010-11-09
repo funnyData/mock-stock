@@ -127,7 +127,8 @@ public class ManagePanel extends VerticalPanel implements Initializable {
     }
 
     private void createTransTable(DealLog[] logs) {
-        transGrid = new Grid(logs.length + 1, 7);
+        transGrid = new Grid(logs.length + 1, TRANS_HISTORY_HEADERS.length);
+        transGrid.setCellPadding(6);
         for (int i = 0; i < TRANS_HISTORY_HEADERS.length; i++) {
             transGrid.setWidget(0, i, new Label(TRANS_HISTORY_HEADERS[i]));
         }
@@ -136,7 +137,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
 
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
         for (int row = 1; row <= logs.length; row++) {
-            DealLog deal = logs[row - 1];
+            final DealLog deal = logs[row - 1];
             transGrid.setWidget(row, 0, new Label(deal.getCode()));
             transGrid.setWidget(row, 1, new Label(deal.getName()));
             transGrid.setWidget(row, 2, new Label(deal.getBs()));
@@ -149,9 +150,10 @@ public class ManagePanel extends VerticalPanel implements Initializable {
             }
             transGrid.setWidget(row, 3, new Label(fmt.format(deal.getPrice())));
             transGrid.setWidget(row, 4, new Label(fmt.format(deal.getAmount())));
-            grid.setWidget(row, 5, new Label(fmt.format(deal.getCommission())));
+            transGrid.setWidget(row, 5, new Label(fmt.format(deal.getCommission())));
             transGrid.setWidget(row, 6, new Label(deal.getCreated()));
             transGrid.getRowFormatter().addStyleName(row, "watchListNumericColumn");
+
         }
     }
 

@@ -21,8 +21,9 @@ public class PositionPanel extends VerticalPanel implements Initializable {
     private TextBox symbolBox = new TextBox();
     private TextBox amountBox = new TextBox();
 
-    private Button buyStockButton = new Button("买入");
-    private Button sellStockButton = new Button("卖出");
+    private Button buyBtn = new Button("买入");
+    private Button sellBtn = new Button("卖出");
+    private Button refreshBtn = new Button("刷新");
     private Label lastUpdatedLabel = new Label();
 
     private Timer refreshTimer;
@@ -36,23 +37,27 @@ public class PositionPanel extends VerticalPanel implements Initializable {
 
         // Assemble Add Stock panel.
         HorizontalPanel operatePanel = new HorizontalPanel();
+        operatePanel.setSpacing(10);
 
+        symbolBox.setMaxLength(6);
+        symbolBox.setWidth("60px");
+        amountBox.setMaxLength(10);
+        amountBox.setWidth("80px");
         operatePanel.add(new Label("代码:"));
         operatePanel.add(symbolBox);
         operatePanel.add(new Label("数量:"));
         operatePanel.add(amountBox);
-        operatePanel.add(buyStockButton);
-        operatePanel.add(sellStockButton);
+        operatePanel.add(buyBtn);
+        operatePanel.add(sellBtn);
         operatePanel.addStyleName("addPanel");
 
         // Assemble Main panel.
-        Button button = new Button("刷新");
-        button.addClickHandler(new ClickHandler(){
+        refreshBtn.addClickHandler(new ClickHandler(){
             public void onClick(ClickEvent event) {
-                refreshPositionList();;
+                refreshPositionList();
             }
         });
-        this.add(button);
+        this.add(refreshBtn);
         this.add(stocksFlexTable);
         this.add(operatePanel);
         this.add(lastUpdatedLabel);
@@ -68,13 +73,13 @@ public class PositionPanel extends VerticalPanel implements Initializable {
 
 
         //Listen for mouse events on the buy/sell button
-        buyStockButton.addClickHandler(new ClickHandler() {
+        buyBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 dealStock(true);
             }
         });
 
-        sellStockButton.addClickHandler(new ClickHandler() {
+        sellBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 dealStock(false);
             }
@@ -124,24 +129,28 @@ public class PositionPanel extends VerticalPanel implements Initializable {
     }
 
     private void placeOrder(String symbol, String amount, boolean isBuy) {
-        buyStockButton.setEnabled(false);
-        sellStockButton.setEnabled(false);
+        buyBtn.setEnabled(false);
+        sellBtn.setEnabled(false);
         // Set up the callback object.
         AsyncCallback<String> callback = new AsyncCallback<String>() {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
                 GWT.log(caught.toString());
+                buyBtn.setEnabled(true);
+                sellBtn.setEnabled(true);
             }
 
             public void onSuccess(String result) {
                 if(result == null){
                     Window.alert(MockStock.SESSION_TIMEOUT_MSG);
+                    buyBtn.setEnabled(true);
+                    sellBtn.setEnabled(true);
                     return;
                 }
                 refreshPositionList();
                 Window.alert(result);
-                buyStockButton.setEnabled(true);
-                sellStockButton.setEnabled(true);
+                buyBtn.setEnabled(true);
+                sellBtn.setEnabled(true);
                 symbolBox.setText("");
                 symbolBox.setFocus(true);
                 amountBox.setText("");
@@ -152,6 +161,7 @@ public class PositionPanel extends VerticalPanel implements Initializable {
     }
 
     private void refreshPositionList() {
+        refreshBtn.setEnabled(false);
         // Initialize the service proxy.
         if (stockSvc == null) {
             stockSvc = GWT.create(StockService.class);
@@ -162,14 +172,17 @@ public class PositionPanel extends VerticalPanel implements Initializable {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
                 GWT.log(caught.toString());
+                refreshBtn.setEnabled(true);
             }
 
             public void onSuccess(StockPosition[] result) {
                 if (result == null) {
                     Window.alert(MockStock.SESSION_TIMEOUT_MSG);
+                    refreshBtn.setEnabled(true);
                     return;
                 }
                 updateTable(result);
+                refreshBtn.setEnabled(true);
             }
         };
         // Make the call to the stock price service.

@@ -2,13 +2,6 @@ package com.longone.broker.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-/**
- * Created by IntelliJ IDEA.
- * User: figo
- * Date: 2010-11-7
- * Time: 21:21:31
- * To change this template use File | Settings | File Templates.
- */
 public class DealLog implements IsSerializable{
     private String code;
     private String name;

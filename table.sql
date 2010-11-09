@@ -49,8 +49,4 @@ values('admin', 'admin', 'Y', 1000000, 1000000, '2010-11-06', null, 'Y');
 insert into users(username, password, superuser, principal, initialPrincipal, startDate, endDate, enabled)
 values('test', 'test', 'Y', 1000000, 1000000, '2010-11-06', null, 'N');
 
-insert into positions (code,name, amount,cost, commission, userid)
-values('600710', '常林股份', 15000, 8.39, 880.95, 'test');
 
-insert into positions (code,name, amount,cost, commission, userid)
-values('600856', '长百集团', 15000, 7.07, 742.35, 'test');
