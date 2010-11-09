@@ -73,7 +73,18 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
 
     private User getCurrentUser() {
         HttpSession session = this.getThreadLocalRequest().getSession();
-        return (User) session.getAttribute(USER);
+        User user = (User) session.getAttribute(USER);
+        String sql = "select principal from users where username='" + user.getUsername() + "'";
+        DbManager manager = InitServlet.getManager();
+        try {
+            ResultSet set = manager.query(sql);
+            while (set.next()) {
+                user.setPrincipal(set.getDouble("principal"));
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return user;
     }
 
     public String resetPassword(String password) {
@@ -97,13 +108,8 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return "密码更新成功！！！";
     }
 
-    public DealLog[] getDealLogs() {
-        User user = getCurrentUser();
-        if (user == null) {
-            return null;
-        }
-
-        String sql = "select * from dealLogs where userid = '" + user.getUsername() + "' order by id desc";
+    public DealLog[] getDealLogs(String username) {
+        String sql = "select * from dealLogs where userid = '" + username + "' order by id desc";
         DbManager manager = InitServlet.getManager();
         List<DealLog> list = new ArrayList<DealLog>();
         try {
@@ -130,6 +136,14 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return logs;
     }
 
+    public DealLog[] getDealLogs() {
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
+        return getDealLogs(user.getUsername());
+    }
+
     public User login(String username, String password) {
         String sql = "select * from users where enabled = 'Y' and username = '" + username + "'";
         DbManager manager = InitServlet.getManager();
@@ -137,14 +151,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
             ResultSet set = manager.query(sql);
             if (set.next()) {
                 if (password.equals(set.getString("password"))) {
-                    User user = new User();
-                    user.setUsername(set.getString("username"));
-                    user.setSuperUser(set.getString("superuser"));
-                    user.setStartDate(set.getDate("startDate"));
-                    user.setEndDate(set.getDate("endDate"));
-                    user.setPrincipal(set.getDouble("principal"));
-                    user.setInitialPrincipal(set.getDouble("initialPrincipal"));
-
+                    User user = ProfitCalculator.createUser(set);
                     HttpSession session = this.getThreadLocalRequest().getSession();
                     session.setAttribute(USER, user);
                     return user;
@@ -156,13 +163,23 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return null;
     }
 
+
     public AccountInfo getAccountInfo() {
         User user = getCurrentUser();
-        if(user == null) {
+        if (user == null) {
             return null;
         }
         return ProfitCalculator.getAccountInfo(user);
     }
+
+    public AccountInfo[] getAllAccountInfo() {
+        User user = getCurrentUser();
+        if (user == null) {
+            return null;
+        }
+        return ProfitCalculator.getAllAccountInfo();
+    }
+
 
     private String insertDeal(String username, StockPosition position, double currentPrice, int amount,
                               boolean buy, double principal) {
@@ -210,7 +227,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
             double newCommission = position.getCommission() + commission;
             int newAmount;
             double newCost;
-            double profit = 0;
+            double profit;
             if (buy) {
                 newAmount = position.getAmount() + amount;
                 //newCost = (-1*position.getProfit() + expense) / newAmount;
@@ -222,12 +239,12 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
 
                 if (newAmount == 0) {
                     newCost = position.getCostPrice();
-                    profit = position.getProfit() + expense;
                 } else {
-                    //newCost = (expense + position.getProfit()) / newAmount;
+                    //newCost = -1*(expense + position.getProfit()) / newAmount;
                     newCost = BigDecimal.valueOf(expense).add(BigDecimal.valueOf(position.getProfit()))
-                            .divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            .divide(BigDecimal.valueOf(newAmount), 2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(-1)).doubleValue();
                 }
+                profit = position.getProfit() + expense;
             }
             logger.debug("expense: " + expense);
             positionsSql.append("update positions set amount = ");
@@ -318,8 +335,6 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         logger.error(username + "not found....");
         return 0;
     }
-
-    
 
 
     public static void main(String[] args) {

@@ -34,7 +34,6 @@ public class PositionPanel extends VerticalPanel implements Initializable {
         this.stockSvc = stockSvc;
         createPositionHeader();
 
-
         // Assemble Add Stock panel.
         HorizontalPanel operatePanel = new HorizontalPanel();
 
@@ -47,6 +46,13 @@ public class PositionPanel extends VerticalPanel implements Initializable {
         operatePanel.addStyleName("addPanel");
 
         // Assemble Main panel.
+        Button button = new Button("刷新");
+        button.addClickHandler(new ClickHandler(){
+            public void onClick(ClickEvent event) {
+                refreshPositionList();;
+            }
+        });
+        this.add(button);
         this.add(stocksFlexTable);
         this.add(operatePanel);
         this.add(lastUpdatedLabel);

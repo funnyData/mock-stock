@@ -10,27 +10,82 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public final class ProfitCalculator {
-   private static final Logger logger = Logger.getLogger(ProfitCalculator.class);
+    private static final Logger logger = Logger.getLogger(ProfitCalculator.class);
 
+    public static AccountInfo[] getAllAccountInfo() {
+        List<User> list = getAllUsers();
+        List<AccountInfo> accounts = new ArrayList<AccountInfo>();
+        for(User user : list){
+            accounts.add(getAccountInfo(user));
+        }
+        AccountInfo [] result = new AccountInfo[accounts.size()];
+        for(int i=0; i<result.length;i++) {
+            result[i] = accounts.get(i);
+        }
+        Arrays.sort(result, new Comparator<AccountInfo>(){
+            public int compare(AccountInfo o1, AccountInfo o2) {
+                if(o1.getProfit() > o2.getProfit()) {
+                    return -1;
+                }
+                else if( o1.getProfit() < o2.getProfit()) {
+                    return 1;
+                }
+                else {
+                    return 0;    
+                }
+            }
+        });
+        return result;
+    }
+
+    private static List<User> getAllUsers() {
+        String sql = "select * from users";
+        List<User> list = new ArrayList<User>();
+        DbManager manager = InitServlet.getManager();
+        ResultSet set;
+        try {
+            set = manager.query(sql);
+            while(set.next()) {
+                list.add(createUser(set));
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return list;
+    }
+
+    public static User createUser(ResultSet set) throws SQLException {
+        User user = new User();
+        user.setUsername(set.getString("username"));
+        user.setSuperUser(set.getString("superuser"));
+        user.setStartDate(set.getDate("startDate"));
+        user.setEndDate(set.getDate("endDate"));
+        user.setPrincipal(set.getDouble("principal"));
+        user.setInitialPrincipal(set.getDouble("initialPrincipal"));
+        return user;
+    }
 
     //{"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例"};
     public static AccountInfo getAccountInfo(User user) {
         AccountInfo info = new AccountInfo();
+        info.setUsername(user.getUsername());
         info.setIntialPrincipal(user.getInitialPrincipal());
         info.setLeftCapitical(user.getPrincipal());
 
         StockPosition[] positions = queryPosition(user.getUsername());
         BigDecimal stockValue = new BigDecimal(0);
-        for(StockPosition position :positions) {
+        for (StockPosition position : positions) {
             stockValue = BigDecimal.valueOf(position.getAmount()).multiply(BigDecimal.valueOf(position.getCurrentPrice())).setScale(2, BigDecimal.ROUND_HALF_UP).add(stockValue);
         }
         info.setStockValue(stockValue.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         info.setTotalValue(stockValue.add(BigDecimal.valueOf(user.getPrincipal())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         info.setProfit(info.getTotalValue() - info.getIntialPrincipal());
-        double pct = BigDecimal.valueOf(info.getProfit()*100).divide(BigDecimal.valueOf(info.getIntialPrincipal())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double pct = BigDecimal.valueOf(info.getProfit() * 100).divide(BigDecimal.valueOf(info.getIntialPrincipal())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         info.setProfitPct(pct);
         return info;
     }
@@ -79,4 +134,6 @@ public final class ProfitCalculator {
         }
         return positions;
     }
+
+
 }

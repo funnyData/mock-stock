@@ -24,6 +24,7 @@ public class ContextListener implements ServletContextListener,
     private static Logger logger = null;
     public static final String DB_MANAGER = "dbManager";
     public static final String SYS_PROP = "sysProp";
+    public static DBFReaderThread reader;
 
     private static final String LOG4J_CONFIG = "WEB-INF/log4j.properties";
     private static final String APP_CONFIG = "WEB-INF/config.properties";
@@ -41,7 +42,8 @@ public class ContextListener implements ServletContextListener,
         logger = Logger.getLogger(ContextListener.class.getName());
         loadProperties(context);
         initDataPool(context);
-        new Thread(DBFReaderThread.getInstance()).start();
+        reader = new DBFReaderThread((Properties)context.getAttribute(SYS_PROP));
+        new Thread(reader).start();
     }
 
     private void initDataPool(ServletContext context) {
@@ -70,6 +72,8 @@ public class ContextListener implements ServletContextListener,
         try {
             sysProp.load(new FileInputStream(webAppPath + APP_CONFIG));
             context.setAttribute(SYS_PROP, sysProp);
+            logger.info("application properties file loaded....");
+            logger.debug(sysProp.get("SH_FILE"));
         } catch (IOException e) {
             logger.error("Failed to load application properties file", e);
         }
@@ -77,7 +81,7 @@ public class ContextListener implements ServletContextListener,
 
     public void contextDestroyed(ServletContextEvent event) {
         logger.info("===================contextDestroyed==============");
-        DBFReaderThread.getInstance().stopThread();
+        reader.stopThread();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

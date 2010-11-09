@@ -11,4 +11,8 @@ public interface StockService extends RemoteService {
     DealLog[] getDealLogs();
     User login(String username, String password);
     AccountInfo getAccountInfo();
+
+    AccountInfo[] getAllAccountInfo();
+
+    DealLog[] getDealLogs(String username);
 }
