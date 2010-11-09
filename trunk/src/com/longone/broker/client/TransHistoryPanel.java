@@ -25,6 +25,7 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
                 loadData();
             }
         });
+        grid.setCellPadding(6);
     }
 
     private void loadData() {
@@ -49,6 +50,7 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
     }
 
     private void populateGrid(DealLog[] logs) {
+
         grid.resize(logs.length + 1, 7);
         for (int i = 0; i < HEADERS.length; i++) {
             grid.setWidget(0, i, new Label(HEADERS[i]));

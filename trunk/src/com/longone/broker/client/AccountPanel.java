@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class AccountPanel extends VerticalPanel implements Initializable {
-    private Grid grid = new Grid(2,6);
+    private Grid grid = new Grid(2, 6);
     private static final String[] HEADERS = {"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例"};
     private Button button = new Button("刷新");
     private StockServiceAsync stockSvc;
@@ -35,7 +35,8 @@ public class AccountPanel extends VerticalPanel implements Initializable {
             grid.setWidget(0, i, new Label(HEADERS[i]));
         }
         grid.getRowFormatter().setStyleName(0, "watchListHeader");
-        grid.addStyleName("watchList");    
+        grid.addStyleName("watchList");
+        grid.setCellPadding(6);
     }
 
     private void loadData() {
@@ -47,7 +48,7 @@ public class AccountPanel extends VerticalPanel implements Initializable {
             }
 
             public void onSuccess(AccountInfo info) {
-                if(info == null){
+                if (info == null) {
                     Window.alert(MockStock.SESSION_TIMEOUT_MSG);
                     return;
                 }
@@ -56,7 +57,7 @@ public class AccountPanel extends VerticalPanel implements Initializable {
             }
         };
         // Make the call to the stock price service.
-        stockSvc.getAccountInfo(callback);            
+        stockSvc.getAccountInfo(callback);
     }
 
     private void populateGridData(AccountInfo info) {
@@ -66,7 +67,24 @@ public class AccountPanel extends VerticalPanel implements Initializable {
         grid.setWidget(1, 2, new Label(fmt.format(info.getStockValue())));
         grid.setWidget(1, 3, new Label(fmt.format(info.getTotalValue())));
         grid.setWidget(1, 4, new Label(fmt.format(info.getProfit())));
-        grid.setWidget(1, 5, new Label(fmt.format(info.getProfitPct())));    
+        grid.setWidget(1, 5, new Label(fmt.format(info.getProfitPct()) + "%"));
+        if (info.getProfit() > 0) {
+            grid.getCellFormatter().removeStyleName(1, 4, "negativeChange");
+            grid.getCellFormatter().addStyleName(1, 4, "positiveChange");
+            grid.getCellFormatter().removeStyleName(1, 5, "negativeChange");
+            grid.getCellFormatter().addStyleName(1, 5, "positiveChange");
+        } else if (info.getProfit() < 0) {
+            grid.getCellFormatter().removeStyleName(1, 4, "positiveChange");
+            grid.getCellFormatter().addStyleName(1, 4, "negativeChange");
+            grid.getCellFormatter().removeStyleName(1, 5, "positiveChange");
+            grid.getCellFormatter().addStyleName(1, 5, "negativeChange");
+        } else {
+            grid.getCellFormatter().removeStyleName(1, 4, "positiveChange");
+            grid.getCellFormatter().removeStyleName(1, 4, "negativeChange");
+            grid.getCellFormatter().removeStyleName(1, 5, "positiveChange");
+            grid.getCellFormatter().removeStyleName(1, 5, "negativeChange");
+        }
+
     }
 
 

@@ -18,10 +18,18 @@
         <servlet-name>com.longone.broker.MockStock StockService</servlet-name>
         <servlet-class>com.longone.broker.server.StockServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.longone.broker.servlet.LogoutServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>com.longone.broker.MockStock StockService</servlet-name>
         <url-pattern>/mockstock/stockPositions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->

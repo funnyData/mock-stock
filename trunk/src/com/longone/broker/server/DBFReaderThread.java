@@ -9,13 +9,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DBFReaderThread implements Runnable {
     private static final Logger logger = Logger.getLogger(DBFReaderThread.class);
-    private static final String SH_FILE = "SHOW2003.DBF";
-    private static final String SZ_FILE = "SJSHQ.DBF";
 
     // code, name, preClose, open, price, highest, lowest
     private static final String[] SH_FIELDS = {"S1", "S2", "S3", "S4", "S8", "S6", "S7"};
@@ -24,21 +22,19 @@ public class DBFReaderThread implements Runnable {
 
     private static Map<String, StockPrice> data = new ConcurrentHashMap<String, StockPrice>();
     private boolean isStop = false;
+    private String shFile;
+    private String szFile;
 
-    private DBFReaderThread() {
-    }
-
-    private static DBFReaderThread thread = new DBFReaderThread();
-
-    public static DBFReaderThread getInstance() {
-        return thread;
+    public DBFReaderThread(Properties properties) {
+        shFile = (String) properties.get("SH_FILE");
+        szFile = (String) properties.get("SZ_FILE");
     }
 
     public void run() {
         logger.info("Start running DBFReaderThread....");
         while (!isStop) {
-            loadFile(data, SH_FILE, SH_FIELDS);
-            loadFile(data, SZ_FILE, SZ_FIELDS);
+            loadFile(data, shFile, SH_FIELDS);
+            loadFile(data, szFile, SZ_FIELDS);
             try {
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
@@ -97,12 +93,6 @@ public class DBFReaderThread implements Runnable {
         stock.setPreClose((Double) record.getNumberValue(fields[2]));
         stock.setOpen((Double) record.getNumberValue(fields[3]));
         stock.setPrice((Double) record.getNumberValue(fields[4]));
-        //todo to be deleted....
-        final double MAX_PRICE = 100.0; // $100.00
-        Random random = new Random();
-
-        stock.setPrice(Math.round(random.nextDouble() * MAX_PRICE * 100) / 100.0);
-        //====end======
         stock.setHighest((Double) record.getNumberValue(fields[5]));
         stock.setLowest((Double) record.getNumberValue(fields[6]));
         return stock;

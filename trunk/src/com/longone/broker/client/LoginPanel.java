@@ -14,11 +14,10 @@ public class LoginPanel extends DecoratorPanel {
     private TextBox usernameBox = new TextBox();
     private PasswordTextBox passwordBox = new PasswordTextBox();
     private StockServiceAsync stockSvc;
-    
+
 
     public LoginPanel(StockServiceAsync stockSvc) {
         this.stockSvc = stockSvc;
-
         // Create a table to layout the form options
         FlexTable layout = new FlexTable();
         layout.setCellSpacing(6);
@@ -33,7 +32,6 @@ public class LoginPanel extends DecoratorPanel {
         layout.setWidget(3, 1, loginBtn);
 
         this.setWidget(layout);
-
         loginBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 login();
@@ -56,18 +54,19 @@ public class LoginPanel extends DecoratorPanel {
             }
 
             public void onSuccess(User user) {
-               if(user == null){
-                   Window.alert("用户名或密码错误！！！");
-                   usernameBox.setText("");
-                   passwordBox.setText("");
-                   return;
-               }
+                if (user == null) {
+                    Window.alert("用户名或密码错误！！！");
+                    usernameBox.setText("");
+                    passwordBox.setText("");
+                    return;
+                }
 
                 // change view
                 RootPanel.get("stockList").remove(getItself());
-                RootPanel.get("stockList").add(new Label("欢迎 "+ user.getUsername()));
+                HTML html = new HTML("欢迎 " + user.getUsername() + " <a href=\"./logout\">注销</a>");
+                RootPanel.get("stockList").add(html);
 
-                DecoratedTabPanel tabs = createTabPanel();
+                DecoratedTabPanel tabs = createTabPanel(user.getSuperUser());
                 RootPanel.get("stockList").add(tabs);
                 tabs.selectTab(0);
             }
@@ -80,7 +79,7 @@ public class LoginPanel extends DecoratorPanel {
         return this;
     }
 
-    private DecoratedTabPanel createTabPanel() {
+    private DecoratedTabPanel createTabPanel(String superUser) {
         final DecoratedTabPanel tabPanel = new DecoratedTabPanel();
         tabPanel.setWidth("1000px");
         tabPanel.setAnimationEnabled(true);
@@ -88,13 +87,16 @@ public class LoginPanel extends DecoratorPanel {
         tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
         tabPanel.add(new AccountPanel(stockSvc), "账户");
         tabPanel.add(new PasswordResetPanel(stockSvc), "修改密码");
+        if ("Y".equals(superUser)) {
+            tabPanel.add(new ManagePanel(stockSvc), "管理");
+        }
 
         // lazy loading
-        tabPanel.addSelectionHandler(new SelectionHandler<Integer>(){
+        tabPanel.addSelectionHandler(new SelectionHandler<Integer>() {
             public void onSelection(SelectionEvent selectionEvent) {
                 Object obj = tabPanel.getWidget((Integer) selectionEvent.getSelectedItem());
-                if(obj instanceof Initializable) {
-                    ((Initializable)obj).initialize();
+                if (obj instanceof Initializable) {
+                    ((Initializable) obj).initialize();
                 }
             }
         });
