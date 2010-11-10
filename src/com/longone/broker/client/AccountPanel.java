@@ -12,8 +12,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class AccountPanel extends VerticalPanel implements Initializable {
-    private Grid grid = new Grid(2, 6);
-    private static final String[] HEADERS = {"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例"};
+
+    private static final String[] HEADERS = {"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例", "股票持仓比例"};
+    private Grid grid = new Grid(2, HEADERS.length);
     private Button button = new Button("刷新");
     private StockServiceAsync stockSvc;
 
@@ -84,7 +85,9 @@ public class AccountPanel extends VerticalPanel implements Initializable {
             grid.getCellFormatter().removeStyleName(1, 5, "positiveChange");
             grid.getCellFormatter().removeStyleName(1, 5, "negativeChange");
         }
-
+        if (info.getTotalValue() != 0) {
+            grid.setWidget(1, 6, new Label(fmt.format(100.0 * info.getStockValue() / info.getTotalValue()) + "%"));
+        }
     }
 
 

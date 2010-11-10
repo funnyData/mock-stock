@@ -11,6 +11,8 @@ public class StockPosition implements IsSerializable {
     private double currentPrice;
     private double profit;
     private double profitPct;
+    private double stockValue;
+    private double stockValuePct;
 
     public String getCode() {
         return code;
@@ -74,5 +76,21 @@ public class StockPosition implements IsSerializable {
 
     public void setProfitPct(double profitPct) {
         this.profitPct = profitPct;
+    }
+
+    public double getStockValuePct() {
+        return stockValuePct;
+    }
+
+    public void setStockValuePct(double stockValuePct) {
+        this.stockValuePct = stockValuePct;
+    }
+
+    public double getStockValue() {
+        return stockValue;
+    }
+
+    public void setStockValue(double stockValue) {
+        this.stockValue = stockValue;
     }
 }

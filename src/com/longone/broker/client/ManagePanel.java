@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.*;
 
 public class ManagePanel extends VerticalPanel implements Initializable {
     private FlexTable grid = new FlexTable();
-    private static final String[] HEADERS = {"用户", "初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例", " "};
+    private static final String[] HEADERS = {"用户", "初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例", "股票持仓比例", " "};
     private static final String[] TRANS_HISTORY_HEADERS = {"股票代码", "股票简称", "买卖方向", "成交价格", "数量", "佣金", "交易时间"};
     private Button button = new Button("刷新");
     private StockServiceAsync stockSvc;
@@ -91,8 +91,16 @@ public class ManagePanel extends VerticalPanel implements Initializable {
             grid.getCellFormatter().removeStyleName(row, 6, "positiveChange");
             grid.getCellFormatter().removeStyleName(row, 6, "negativeChange");
         }
+
+        if (info.getTotalValue() != 0) {
+            grid.setWidget(row, 7, new Label(fmt.format(100.0 * info.getStockValue() / info.getTotalValue()) + "%"));
+        }
+        else {
+            grid.setWidget(row, 7, new Label("--"));
+        }
+        
         Button button = new Button("交易记录");
-        grid.setWidget(row, 7, button);
+        grid.setWidget(row, 8, button);
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 showTransHistory(info.getUsername());
