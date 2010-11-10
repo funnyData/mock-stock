@@ -30,4 +30,8 @@ public class InitServlet extends HttpServlet {
     public static Properties getProp() {
         return prop;
     }
+
+    public static void setManager(DbManager manager) {
+        InitServlet.manager = manager;
+    }
 }

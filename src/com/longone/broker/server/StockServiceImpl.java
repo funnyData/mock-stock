@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 public class StockServiceImpl extends RemoteServiceServlet implements StockService {
     private static final Logger logger = Logger.getLogger(StockServiceImpl.class);
@@ -30,6 +31,11 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         return ProfitCalculator.queryPosition(user.getUsername());
     }
 
+    public StockPosition[] getStockPositions(String username) {
+        return ProfitCalculator.queryPosition(username);
+    }
+
+
     public String placeOrder(String code, int amount, boolean isBuy) {
         User user = getCurrentUser();
         if (user == null) {
@@ -42,15 +48,20 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         if (stockPrice == null) {
             logger.info(code + " not existed...");
             return "股票代码(" + code + ")不存在！！！";
+        } else if (stockPrice.getPrice() == 0) {
+            logger.info(code + " price is zero....");
+            return "股票(" + code + ")目前不能交易！！！";
         }
+        return doDeal(code, stockPrice.getName(), stockPrice.getPrice(), amount, isBuy, user.getUsername());
+    }
 
+    private String doDeal(String code, String stockName, double currentPrice, int amount, boolean isBuy, String username) {
         // check if amount or principal is enough
-        double currentPrice = stockPrice.getPrice();
         double buyExpense = BigDecimal.valueOf(currentPrice).multiply(BigDecimal.valueOf(amount))
                 .multiply(BigDecimal.valueOf(1 + COMMISSION_PERCENTAGE)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        double principal = queryPrincipal(user.getUsername());
-        StockPosition position = queryPositionByCode(code, user.getUsername());
-        position.setName(stockPrice.getName());
+        double principal = queryPrincipal(username);
+        StockPosition position = queryPositionByCode(code, username);
+        position.setName(stockName);
 
         logger.debug("Try buy/sell stock: " + code);
         logger.debug("principal: " + principal);
@@ -68,7 +79,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         }
 
         // start deal
-        return insertDeal(user.getUsername(), position, currentPrice, amount, isBuy, principal);
+        return insertDeal(username, position, currentPrice, amount, isBuy, principal);
     }
 
     private User getCurrentUser() {
@@ -135,6 +146,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         }
         return logs;
     }
+
 
     public DealLog[] getDealLogs() {
         User user = getCurrentUser();
@@ -338,12 +350,27 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
 
 
     public static void main(String[] args) {
-        //64.04, 8.39, 600710, 834750.0000000001
-        double price = 64.04;
-        double cost = 8.39;
-        int amount = 15000;
-        BigDecimal profit = BigDecimal.valueOf(price).subtract(BigDecimal.valueOf(cost)).multiply(BigDecimal.valueOf(amount));
+        StockServiceImpl service = new StockServiceImpl();
+        //doDeal(String code, String stockName, double currentPrice, int amount, boolean isBuy, String username)
+        Properties prop = new Properties();
+        //dbUrl=jdbc:sqlserver://localhost;databaseName=MockStock
+        //dbUser=sa
+        //dbPwd=freebsd
 
-        System.out.println(profit.doubleValue());
+        String[][] data = {{"000733", "振华科技", "9000", "12.88"},
+                {"000547", "闽福发A", "5000", "7.97"},
+                {"002006", "精工科技", "2500", "7.13"},
+                {"000968", "煤气化", "10000", "20.58"},
+                {"000407", "胜利股份", "30000", "7.65"},
+                {"000630", "铜陵有色", "4000", "28.29"}
+        };
+        prop.put("dbUrl", "jdbc:sqlserver://172.10.1.143:1433;databaseName=MockStock");
+        prop.put("dbUser", "sa");
+        prop.put("dbPwd", "sa");
+        DbManager manager = DbManager.getInstance(prop);
+        InitServlet.setManager(manager);
+        for (String[] record : data) {
+            service.doDeal(record[0], record[1], Double.parseDouble(record[3]), Integer.parseInt(record[2]), true, "admin");
+        }
     }
 }
