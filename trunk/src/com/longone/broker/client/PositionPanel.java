@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class PositionPanel extends VerticalPanel implements Initializable {
     private static final String[] TABLE_COLUMN = {"代码", "名称", "数量", "成本价格", "产生佣金", "股票现价",
-            "浮动盈亏", "浮动盈亏比例"};
+            "浮动盈亏", "浮动盈亏比例", "个股市值", "个股持仓比例"};
 
     private FlexTable stocksFlexTable = new FlexTable();
 
@@ -43,16 +43,16 @@ public class PositionPanel extends VerticalPanel implements Initializable {
         symbolBox.setWidth("60px");
         amountBox.setMaxLength(10);
         amountBox.setWidth("80px");
+        operatePanel.add(buyBtn);
         operatePanel.add(new Label("代码:"));
         operatePanel.add(symbolBox);
         operatePanel.add(new Label("数量:"));
         operatePanel.add(amountBox);
-        operatePanel.add(buyBtn);
         operatePanel.add(sellBtn);
         operatePanel.addStyleName("addPanel");
 
         // Assemble Main panel.
-        refreshBtn.addClickHandler(new ClickHandler(){
+        refreshBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 refreshPositionList();
             }
@@ -141,7 +141,7 @@ public class PositionPanel extends VerticalPanel implements Initializable {
             }
 
             public void onSuccess(String result) {
-                if(result == null){
+                if (result == null) {
                     Window.alert(MockStock.SESSION_TIMEOUT_MSG);
                     buyBtn.setEnabled(true);
                     sellBtn.setEnabled(true);
@@ -218,6 +218,9 @@ public class PositionPanel extends VerticalPanel implements Initializable {
             stocksFlexTable.getCellFormatter().addStyleName(row, 5, "negativeChange");
         }
 
+        stocksFlexTable.setText(row, 8, fmt.format(position.getStockValue()));
+        stocksFlexTable.setText(row, 9, fmt.format(position.getStockValuePct()) + "%");
+        
         fmt = NumberFormat.getFormat("+#,##0.00;-#,##0.00");
         stocksFlexTable.setText(row, 6, fmt.format(position.getProfit()));
         stocksFlexTable.setText(row, 7, String.valueOf(position.getProfitPct()) + "%");
@@ -232,8 +235,6 @@ public class PositionPanel extends VerticalPanel implements Initializable {
             stocksFlexTable.getCellFormatter().removeStyleName(row, 7, "positiveChange");
             stocksFlexTable.getCellFormatter().addStyleName(row, 7, "negativeChange");
         }
-
-
     }
 
     public void initialize() {

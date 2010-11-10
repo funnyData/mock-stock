@@ -95,6 +95,7 @@ public final class ProfitCalculator {
         String sql = "select * from positions where amount > 0 and userid = '" + username + "' order by id desc";
         DbManager manager = InitServlet.getManager();
         List<StockPosition> list = new ArrayList<StockPosition>();
+        BigDecimal totalStockValue = new BigDecimal(0);
         try {
             ResultSet set = manager.query(sql);
             while (set.next()) {
@@ -122,6 +123,12 @@ public final class ProfitCalculator {
                         .divide(BigDecimal.valueOf(cost), 4, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
                 position.setProfitPct(profitPct.doubleValue());
 
+                // calculate stockValue and stockValuePct
+                // current*amount
+                BigDecimal stockValue = BigDecimal.valueOf(stockPrice.getPrice()).multiply(BigDecimal.valueOf(amount));
+                position.setStockValue(stockValue.doubleValue());
+
+                totalStockValue = totalStockValue.add(stockValue);  
                 logger.debug(position.getCurrentPrice() + ", " + position.getCostPrice() + ", " + position.getCode() + ", " + position.getProfit());
                 list.add(position);
             }
@@ -131,6 +138,9 @@ public final class ProfitCalculator {
         StockPosition[] positions = new StockPosition[list.size()];
         for (int i = 0; i < list.size(); i++) {
             positions[i] = list.get(i);
+            BigDecimal pct = BigDecimal.valueOf(100).multiply(BigDecimal.valueOf(positions[i].getStockValue()))
+                    .divide(totalStockValue).setScale(2, BigDecimal.ROUND_HALF_UP);
+            positions[i].setStockValuePct(pct.doubleValue());
         }
         return positions;
     }
