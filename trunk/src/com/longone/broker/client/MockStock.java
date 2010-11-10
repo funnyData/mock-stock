@@ -11,6 +11,6 @@ public class MockStock implements EntryPoint {
 
     public void onModuleLoad() {
         Panel loginPanel = new LoginPanel(stockSvc);
-        RootPanel.get("stockList").add(loginPanel);
+        RootPanel.get("login").add(loginPanel);
     }
 }
