@@ -67,12 +67,12 @@ public class LoginPanel extends DecoratorPanel {
                 }
 
                 // change view
-                RootPanel.get("stockList").remove(getItself());
+                RootPanel.get("login").remove(getItself());
                 HTML html = new HTML("欢迎 " + user.getUsername() + " <a href=\"./logout\">注销</a>");
-                RootPanel.get("stockList").add(html);
+                RootPanel.get("tab").add(html);
 
                 DecoratedTabPanel tabs = createTabPanel(user.getSuperUser());
-                RootPanel.get("stockList").add(tabs);
+                RootPanel.get("tab").add(tabs);
                 tabs.selectTab(0);
             }
         };
@@ -87,7 +87,7 @@ public class LoginPanel extends DecoratorPanel {
     private DecoratedTabPanel createTabPanel(String superUser) {
         final DecoratedTabPanel tabPanel = new DecoratedTabPanel();
         tabPanel.setWidth("1000px");
-        tabPanel.setAnimationEnabled(true);
+        //tabPanel.setAnimationEnabled(true);
         tabPanel.add(new PositionPanel(stockSvc), "持仓");
         tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
         tabPanel.add(new AccountPanel(stockSvc), "账户");

@@ -37,11 +37,6 @@ body {
     margin: 10px 0px 15px 0px;
 }
 
-/* stock list, the Remove button */
-.gwt-Button-remove {
-    width: 50px;
-}
-
 /* Dynamic color changes for the Change field */
 .noChange {
     color: black;
