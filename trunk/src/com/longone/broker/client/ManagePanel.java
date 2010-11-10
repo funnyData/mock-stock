@@ -28,6 +28,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
         this.add(grid);
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                removeGrids();
                 button.setEnabled(false);
                 loadData();
             }
