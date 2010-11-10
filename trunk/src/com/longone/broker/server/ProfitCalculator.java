@@ -110,6 +110,10 @@ public final class ProfitCalculator {
                 position.setCostPrice(cost);
 
                 StockPrice stockPrice = DBFReaderThread.getData().get(code);
+                if(stockPrice.getPrice() <= 0) {
+                    stockPrice.setPrice(stockPrice.getPreClose());
+                }
+                
                 position.setCurrentPrice(stockPrice.getPrice());
 
                 // calculate profit
