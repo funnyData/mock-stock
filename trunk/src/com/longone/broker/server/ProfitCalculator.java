@@ -139,7 +139,7 @@ public final class ProfitCalculator {
         for (int i = 0; i < list.size(); i++) {
             positions[i] = list.get(i);
             BigDecimal pct = BigDecimal.valueOf(100).multiply(BigDecimal.valueOf(positions[i].getStockValue()))
-                    .divide(totalStockValue).setScale(2, BigDecimal.ROUND_HALF_UP);
+                    .divide(totalStockValue, 2, BigDecimal.ROUND_HALF_UP);
             positions[i].setStockValuePct(pct.doubleValue());
         }
         return positions;

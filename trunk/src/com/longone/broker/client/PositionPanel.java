@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -193,48 +192,11 @@ public class PositionPanel extends VerticalPanel implements Initializable {
         stocksFlexTable.removeAllRows();
         createPositionHeader();
         for (int i = 0; i < positions.length; i++) {
-            updateTable(positions[i], i + 1);
+            Util.addPositionRow(stocksFlexTable, positions[i], i + 1);
         }
         // Display timestamp showing last refresh.
         lastUpdatedLabel.setText("最后更新时间 : "
                 + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.ISO_8601).format(new Date()));
-
-    }
-
-    private void updateTable(StockPosition position, int row) {
-        stocksFlexTable.getRowFormatter().addStyleName(row, "watchListNumericColumn");
-        NumberFormat fmt = NumberFormat.getFormat("#,##0.00;#,##0.00");
-        stocksFlexTable.setText(row, 0, position.getCode());
-        stocksFlexTable.setText(row, 1, position.getName());
-        stocksFlexTable.setText(row, 2, String.valueOf(position.getAmount()));
-        stocksFlexTable.setText(row, 3, fmt.format(position.getCostPrice()));
-        stocksFlexTable.setText(row, 4, fmt.format(position.getCommission()));
-        stocksFlexTable.setText(row, 5, fmt.format(position.getCurrentPrice()));
-        if (position.getCurrentPrice() > position.getCostPrice()) {
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 5, "negativeChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 5, "positiveChange");
-        } else {
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 5, "positiveChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 5, "negativeChange");
-        }
-
-        stocksFlexTable.setText(row, 8, fmt.format(position.getStockValue()));
-        stocksFlexTable.setText(row, 9, fmt.format(position.getStockValuePct()) + "%");
-        
-        fmt = NumberFormat.getFormat("+#,##0.00;-#,##0.00");
-        stocksFlexTable.setText(row, 6, fmt.format(position.getProfit()));
-        stocksFlexTable.setText(row, 7, String.valueOf(position.getProfitPct()) + "%");
-        if (position.getProfit() > 0) {
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 6, "negativeChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 6, "positiveChange");
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 7, "negativeChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 7, "positiveChange");
-        } else {
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 6, "positiveChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 6, "negativeChange");
-            stocksFlexTable.getCellFormatter().removeStyleName(row, 7, "positiveChange");
-            stocksFlexTable.getCellFormatter().addStyleName(row, 7, "negativeChange");
-        }
     }
 
     public void initialize() {

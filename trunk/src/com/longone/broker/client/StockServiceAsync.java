@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface StockServiceAsync {
     void getStockPositions(AsyncCallback<StockPosition[]> async);
+    void getStockPositions(String username, AsyncCallback<StockPosition[]> async);
     void placeOrder(String code, int amount, boolean isBuy, AsyncCallback<String> async);
     void resetPassword(String password, AsyncCallback<String> async);
     void getDealLogs(AsyncCallback<DealLog[]> async);
