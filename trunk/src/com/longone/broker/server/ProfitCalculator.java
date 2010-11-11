@@ -62,6 +62,7 @@ public final class ProfitCalculator {
     public static User createUser(ResultSet set) throws SQLException {
         User user = new User();
         user.setUsername(set.getString("username"));
+        user.setDisplayName(set.getString("displayName"));
         user.setSuperUser(set.getString("superuser"));
         user.setStartDate(set.getDate("startDate"));
         user.setEndDate(set.getDate("endDate"));
@@ -74,6 +75,7 @@ public final class ProfitCalculator {
     public static AccountInfo getAccountInfo(User user) {
         AccountInfo info = new AccountInfo();
         info.setUsername(user.getUsername());
+        info.setDisplayName(user.getDisplayName());
         info.setIntialPrincipal(user.getInitialPrincipal());
         info.setLeftCapitical(user.getPrincipal());
 

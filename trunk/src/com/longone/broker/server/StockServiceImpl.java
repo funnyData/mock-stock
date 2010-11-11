@@ -186,7 +186,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
 
     public AccountInfo[] getAllAccountInfo() {
         User user = getCurrentUser();
-        if (user == null) {
+        if (user == null || !"Y".equals(user.getSuperUser())) {
             return null;
         }
         return ProfitCalculator.getAllAccountInfo();
@@ -370,7 +370,8 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         DbManager manager = DbManager.getInstance(prop);
         InitServlet.setManager(manager);
         for (String[] record : data) {
-            service.doDeal(record[0], record[1], Double.parseDouble(record[3]), Integer.parseInt(record[2]), true, "admin");
+            String result = service.doDeal(record[0], record[1], Double.parseDouble(record[3]), Integer.parseInt(record[2]), true, "lczx");
+            System.out.println(result);
         }
     }
 }
