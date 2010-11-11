@@ -68,10 +68,10 @@ public class LoginPanel extends DecoratorPanel {
 
                 // change view
                 RootPanel.get("login").remove(getItself());
-                HTML html = new HTML("欢迎 " + user.getUsername() + " <a href=\"./logout\">注销</a>");
+                HTML html = new HTML("欢迎 " + user.getDisplayName() + " <a href=\"./logout\">注销</a>");
                 RootPanel.get("tab").add(html);
 
-                DecoratedTabPanel tabs = createTabPanel(user.getSuperUser());
+                DecoratedTabPanel tabs = createTabPanel(user);
                 RootPanel.get("tab").add(tabs);
                 tabs.selectTab(0);
             }
@@ -84,21 +84,25 @@ public class LoginPanel extends DecoratorPanel {
         return this;
     }
 
-    private DecoratedTabPanel createTabPanel(String superUser) {
+    private DecoratedTabPanel createTabPanel(User user) {
         final DecoratedTabPanel tabPanel = new DecoratedTabPanel();
         tabPanel.setWidth("1000px");
         //tabPanel.setAnimationEnabled(true);
-        tabPanel.add(new PositionPanel(stockSvc), "持仓");
-        tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
-        tabPanel.add(new AccountPanel(stockSvc), "账户");
-        tabPanel.add(new PasswordResetPanel(stockSvc), "修改密码");
-        if ("Y".equals(superUser)) {
+        if (!"dhzq".equals(user.getUsername())) {
+            tabPanel.add(new PositionPanel(stockSvc), "持仓");
+            tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
+            tabPanel.add(new AccountPanel(stockSvc), "账户");
+        }
+        if ("Y".equals(user.getSuperUser())) {
             tabPanel.add(new ManagePanel(stockSvc), "管理");
         }
+        tabPanel.add(new PasswordResetPanel(stockSvc), "修改密码");
 
         // lazy loading
         tabPanel.addSelectionHandler(new SelectionHandler<Integer>() {
-            public void onSelection(SelectionEvent selectionEvent) {
+            public void onSelection
+                    (SelectionEvent
+                            selectionEvent) {
                 Object obj = tabPanel.getWidget((Integer) selectionEvent.getSelectedItem());
                 if (obj instanceof Initializable) {
                     ((Initializable) obj).initialize();

@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class AccountInfo implements IsSerializable {
     //{"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例"};
     private String username;
+    private String displayName;
     private double intialPrincipal;
     private double leftCapitical;
     private double stockValue;
@@ -66,5 +67,13 @@ public class AccountInfo implements IsSerializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

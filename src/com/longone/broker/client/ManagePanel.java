@@ -74,7 +74,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
 
     private void populateGridData(int row, final AccountInfo info) {
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
-        grid.setWidget(row, 0, new Label(info.getUsername()));
+        grid.setWidget(row, 0, new Label(info.getDisplayName()));
         grid.setWidget(row, 1, new Label(fmt.format(info.getIntialPrincipal())));
         grid.setWidget(row, 2, new Label(fmt.format(info.getLeftCapitical())));
         grid.setWidget(row, 3, new Label(fmt.format(info.getStockValue())));
@@ -108,7 +108,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
         grid.setWidget(row, 8, button);
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                showTransHistory(info.getUsername());
+                showTransHistory(info.getUsername(), info.getDisplayName());
             }
         });
 
@@ -116,12 +116,12 @@ public class ManagePanel extends VerticalPanel implements Initializable {
         grid.setWidget(row, 9, positionBtn);
         positionBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                showPosition(info.getUsername());
+                showPosition(info.getUsername(), info.getDisplayName());
             }
         });
     }
 
-    private void showPosition(final String username) {
+    private void showPosition(final String username, final String displayName) {
         AsyncCallback<StockPosition[]> callback = new AsyncCallback<StockPosition[]>() {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
@@ -135,7 +135,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
                 }
                 removeGrids();
                 createPositionTable(positions);
-                transUser = new Label(username + "持仓情况如下：");
+                transUser = new Label("\"" + displayName + "\"持仓情况如下：");
                 getItself().add(transUser);
                 getItself().add(positionGrid);
             }
@@ -145,7 +145,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
     }
 
     private void removeGrids() {
-        if(transUser != null){
+        if (transUser != null) {
             getItself().remove(transUser);
         }
         if (positionGrid != null) {
@@ -157,13 +157,12 @@ public class ManagePanel extends VerticalPanel implements Initializable {
     }
 
 
-    private void showTransHistory(final String username) {
+    private void showTransHistory(final String username, final String displayName) {
         AsyncCallback<DealLog[]> callback = new AsyncCallback<DealLog[]>() {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
                 GWT.log(caught.toString());
             }
-
             public void onSuccess(DealLog[] logs) {
                 if (logs == null) {
                     Window.alert(MockStock.SESSION_TIMEOUT_MSG);
@@ -171,7 +170,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
                 }
                 removeGrids();
                 createTransTable(logs);
-                transUser = new Label(username + "的交易记录如下：");
+                transUser = new Label("\"" + displayName + "\"的交易记录如下：");
                 getItself().add(transUser);
                 getItself().add(transGrid);
             }
@@ -225,7 +224,6 @@ public class ManagePanel extends VerticalPanel implements Initializable {
             transGrid.setWidget(row, 5, new Label(fmt.format(deal.getCommission())));
             transGrid.setWidget(row, 6, new Label(deal.getCreated()));
             transGrid.getRowFormatter().addStyleName(row, "watchListNumericColumn");
-
         }
     }
 

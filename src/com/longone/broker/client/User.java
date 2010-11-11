@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class User implements IsSerializable{
     private String username;
+    private String displayName;
     private String superUser;
     private Date startDate;
     private Date endDate;
@@ -59,5 +60,13 @@ public class User implements IsSerializable{
 
     public void setInitialPrincipal(double initialPrincipal) {
         this.initialPrincipal = initialPrincipal;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
