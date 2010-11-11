@@ -33,11 +33,17 @@ public final class Util {
             table.getCellFormatter().addStyleName(row, 6, "positiveChange");
             table.getCellFormatter().removeStyleName(row, 7, "negativeChange");
             table.getCellFormatter().addStyleName(row, 7, "positiveChange");
-        } else {
+        } else if(position.getProfit() < 0) {
             table.getCellFormatter().removeStyleName(row, 6, "positiveChange");
             table.getCellFormatter().addStyleName(row, 6, "negativeChange");
             table.getCellFormatter().removeStyleName(row, 7, "positiveChange");
             table.getCellFormatter().addStyleName(row, 7, "negativeChange");
+        }
+        else {
+            table.getCellFormatter().removeStyleName(row, 6, "positiveChange");
+            table.getCellFormatter().removeStyleName(row, 6, "negativeChange");
+            table.getCellFormatter().removeStyleName(row, 7, "positiveChange");
+            table.getCellFormatter().removeStyleName(row, 7, "negativeChange");
         }
     }
 }

@@ -21,6 +21,9 @@ public final class ProfitCalculator {
         List<User> list = getAllUsers();
         List<AccountInfo> accounts = new ArrayList<AccountInfo>();
         for(User user : list){
+            if("dhzq".equals(user.getUsername())) {
+                continue;                
+            }
             accounts.add(getAccountInfo(user));
         }
         AccountInfo [] result = new AccountInfo[accounts.size()];
