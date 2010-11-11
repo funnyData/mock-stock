@@ -87,7 +87,7 @@ public class LoginPanel extends DecoratorPanel {
     private DecoratedTabPanel createTabPanel(User user) {
         final DecoratedTabPanel tabPanel = new DecoratedTabPanel();
         tabPanel.setWidth("1000px");
-        //tabPanel.setAnimationEnabled(true);
+        tabPanel.setAnimationEnabled(true);
         if (!"dhzq".equals(user.getUsername())) {
             tabPanel.add(new PositionPanel(stockSvc), "持仓");
             tabPanel.add(new TransHistoryPanel(stockSvc), "成交记录");
