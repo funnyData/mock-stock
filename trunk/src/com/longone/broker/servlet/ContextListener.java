@@ -26,6 +26,7 @@ public class ContextListener implements ServletContextListener,
     public static final String SYS_PROP = "sysProp";
     public static DBFReaderThread reader;
 
+    private static final String JNDI_MOCKSTOCK = "jdbc/mockStock";
     private static final String LOG4J_CONFIG = "WEB-INF/log4j.properties";
     private static final String APP_CONFIG = "WEB-INF/config.properties";
 
