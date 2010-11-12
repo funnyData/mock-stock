@@ -3,6 +3,10 @@ package com.longone.broker.server;
 import com.sun.rowset.CachedRowSetImpl;
 import org.apache.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
 import java.util.Properties;
@@ -13,10 +17,19 @@ public final class DbManager {
     private static String url = null;
     private static String userName = null;
     private static String password = null;
+    private static DataSource datasource = null;
 
     public static DbManager getInstance(Properties prop) {
         if (manager == null) {
             return new DbManager(prop);
+        } else {
+            return manager;
+        }
+    }
+
+    public static DbManager getInstance(String poolName) {
+        if (manager == null) {
+            return new DbManager(poolName);
         } else {
             return manager;
         }
@@ -33,9 +46,22 @@ public final class DbManager {
         }
     }
 
+    private DbManager(String poolName) {
+        try {
+            Context ctx = new InitialContext();
+            datasource = (DataSource) ctx.lookup("java:comp/env/" + poolName);
+        } catch (NamingException e) {
+            logger.fatal("Failed to obtain datasource ", e);
+        }
+    }
+
     private Connection getConnection() {
         try {
-            return DriverManager.getConnection(url, userName, password);
+            if (datasource != null) {
+                return datasource.getConnection();
+            } else {
+                return DriverManager.getConnection(url, userName, password);
+            }
         } catch (SQLException e) {
             logger.error(e);
         }
@@ -62,7 +88,6 @@ public final class DbManager {
     }
 
     private ResultSet executeQuery(Connection conn, PreparedStatement stmt, String sql, String[] strings, boolean isDebug) throws SQLException {
-
         if (isDebug && logger.isDebugEnabled()) {
             logger.debug("Execute below SQL statment: ");
             logger.debug(getStatementStr(sql, strings));

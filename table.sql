@@ -84,7 +84,7 @@ update users set principal = '309313.4' where username = 'lczx';
 update users set principal = '29242.2' where username = 'kxxl';
 update users set principal = '186959.74' where username = 'zsl';
 update users set principal = '89377.5' where username = 'xyl';
-update users set principal = '416480.7' where username = 'jsxl';
+update users set principal = '541852.15' where username = 'jsxl';
 update users set principal = '355525.5' where username = 'zzdl';
 
 /*
