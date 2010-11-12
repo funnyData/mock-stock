@@ -20,26 +20,24 @@ public final class ProfitCalculator {
     public static AccountInfo[] getAllAccountInfo() {
         List<User> list = getAllUsers();
         List<AccountInfo> accounts = new ArrayList<AccountInfo>();
-        for(User user : list){
-            if("dhzq".equals(user.getUsername())) {
-                continue;                
+        for (User user : list) {
+            if ("dhzq".equals(user.getUsername())) {
+                continue;
             }
             accounts.add(getAccountInfo(user));
         }
-        AccountInfo [] result = new AccountInfo[accounts.size()];
-        for(int i=0; i<result.length;i++) {
+        AccountInfo[] result = new AccountInfo[accounts.size()];
+        for (int i = 0; i < result.length; i++) {
             result[i] = accounts.get(i);
         }
-        Arrays.sort(result, new Comparator<AccountInfo>(){
+        Arrays.sort(result, new Comparator<AccountInfo>() {
             public int compare(AccountInfo o1, AccountInfo o2) {
-                if(o1.getProfit() > o2.getProfit()) {
+                if (o1.getProfit() > o2.getProfit()) {
                     return -1;
-                }
-                else if( o1.getProfit() < o2.getProfit()) {
+                } else if (o1.getProfit() < o2.getProfit()) {
                     return 1;
-                }
-                else {
-                    return 0;    
+                } else {
+                    return 0;
                 }
             }
         });
@@ -53,7 +51,7 @@ public final class ProfitCalculator {
         ResultSet set;
         try {
             set = manager.query(sql);
-            while(set.next()) {
+            while (set.next()) {
                 list.add(createUser(set));
             }
         } catch (SQLException e) {
@@ -114,11 +112,19 @@ public final class ProfitCalculator {
                 double cost = set.getDouble("cost");
                 position.setCostPrice(cost);
 
+                logger.error(code);
                 StockPrice stockPrice = DBFReaderThread.getData().get(code);
-                if(stockPrice.getPrice() <= 0) {
-                    stockPrice.setPrice(stockPrice.getPreClose());
+
+                //todo deleted.
+                if("600590".equals(code)) {
+                    stockPrice = new StockPrice();
+                    stockPrice.setPrice(17.75);
                 }
                 
+                if (stockPrice.getPrice() <= 0) {
+                    stockPrice.setPrice(stockPrice.getPreClose());
+                }
+
                 position.setCurrentPrice(stockPrice.getPrice());
 
                 // calculate profit
@@ -137,7 +143,7 @@ public final class ProfitCalculator {
                 BigDecimal stockValue = BigDecimal.valueOf(stockPrice.getPrice()).multiply(BigDecimal.valueOf(amount));
                 position.setStockValue(stockValue.doubleValue());
 
-                totalStockValue = totalStockValue.add(stockValue);  
+                totalStockValue = totalStockValue.add(stockValue);
                 logger.debug(position.getCurrentPrice() + ", " + position.getCostPrice() + ", " + position.getCode() + ", " + position.getProfit());
                 list.add(position);
             }
