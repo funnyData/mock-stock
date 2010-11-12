@@ -46,6 +46,7 @@ public class AccountPanel extends VerticalPanel implements Initializable {
             public void onFailure(Throwable caught) {
                 // TODO: Do something with errors.
                 GWT.log(caught.toString());
+                button.setEnabled(true);
             }
 
             public void onSuccess(AccountInfo info) {
