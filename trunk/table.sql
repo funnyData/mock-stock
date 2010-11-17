@@ -141,7 +141,7 @@ update users set principal = '355525.5' where username = 'zzdl';
 
 create table Quotes (
   id int IDENTITY(1,1) primary key,
-  code varchar(255),
+  code varchar(255) unique,
   name varchar(255),
   preClose float,
   modified datetime
