@@ -115,12 +115,6 @@ public final class ProfitCalculator {
                 logger.error(code);
                 StockPrice stockPrice = DBFReaderThread.getData().get(code);
 
-                //todo deleted.
-                if("600590".equals(code)) {
-                    stockPrice = new StockPrice();
-                    stockPrice.setPrice(17.75);
-                }
-                
                 if (stockPrice.getPrice() <= 0) {
                     stockPrice.setPrice(stockPrice.getPreClose());
                 }

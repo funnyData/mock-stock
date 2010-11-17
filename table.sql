@@ -138,3 +138,11 @@ update users set principal = '355525.5' where username = 'zzdl';
 剩余资金, "480645.2"
 */
 
+
+create table Quotes (
+  id int IDENTITY(1,1) primary key,
+  code varchar(255),
+  name varchar(255),
+  preClose float,
+  modified datetime
+);

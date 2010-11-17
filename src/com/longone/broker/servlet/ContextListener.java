@@ -43,7 +43,7 @@ public class ContextListener implements ServletContextListener,
         logger = Logger.getLogger(ContextListener.class.getName());
         loadProperties(context);
         initDataPool(context);
-        reader = new DBFReaderThread((Properties)context.getAttribute(SYS_PROP));
+        reader = new DBFReaderThread((Properties)context.getAttribute(SYS_PROP), (DbManager)context.getAttribute(DB_MANAGER));
         new Thread(reader).start();
     }
 

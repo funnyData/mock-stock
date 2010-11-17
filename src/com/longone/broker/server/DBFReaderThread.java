@@ -6,10 +6,11 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DBFReaderThread implements Runnable {
@@ -24,8 +25,10 @@ public class DBFReaderThread implements Runnable {
     private boolean isStop = false;
     private String shFile;
     private String szFile;
+    private DbManager manager;
 
-    public DBFReaderThread(Properties properties) {
+    public DBFReaderThread(Properties properties, DbManager manager) {
+        this.manager = manager;
         shFile = (String) properties.get("SH_FILE");
         szFile = (String) properties.get("SZ_FILE");
     }
@@ -36,18 +39,95 @@ public class DBFReaderThread implements Runnable {
         while (!isStop) {
             loadFile(data, shFile, SH_FIELDS);
             loadFile(data, szFile, SZ_FIELDS);
+            if (count % 60 == 0) {
+                syncQuoteTable();
+                count = 0;
+            }
             try {
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
                 logger.error(e);
             }
             count++;
-            if(count > 200) {
-                logger.info("loading " + data.size() + " stocks from DBF....");
-                count = 0;
-            }
         }
     }
+
+    private void syncQuoteTable() {
+        long start = new Date().getTime();
+        logger.info("start synchronizing Quote Table.....");
+        String sql = "select * from Quotes";
+        try {
+            // database -> map
+            ResultSet set = manager.query(sql);
+            Map<String, Double> dbMap = new HashMap<String, Double>();
+            while (set.next()) {
+                String code = set.getString("code");
+                double preClose = set.getDouble("preClose");
+                dbMap.put(code, preClose);
+                if (data.get(code) == null) {
+                    logger.info("Stock " + code + " not in DBF");
+                    StockPrice stockPrice = new StockPrice();
+                    stockPrice.setCode(code);
+                    stockPrice.setName(set.getString("name"));
+                    stockPrice.setPreClose(preClose);
+                    stockPrice.setPrice(0);
+                    data.put(code, stockPrice);
+                }
+            }
+
+            // map -> database
+            DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time = fmt.format(new Date());
+            Set<String> dbCode = dbMap.keySet();
+            for (String code : data.keySet()) {
+                if (dbCode.contains(code)) {
+                    if (dbMap.get(code) != data.get(code).getPreClose()) {
+                        StringBuffer buf = new StringBuffer("update Quotes set preClose = ");
+                        buf.append(data.get(code).getPreClose()).append(", name='");
+                        buf.append(data.get(code).getName()).append("', modified='");
+                        buf.append(time).append("' where code = '");
+                        buf.append(code).append("'");
+                        manager.insertOrUpdate(buf.toString());
+                    }
+                } else {
+                    logger.info("add new stock " + code);
+                    StringBuffer buf = new StringBuffer("insert into Quotes (code, name, preClose, modified) values (");
+                    buf.append("'").append(code).append("', ");
+                    buf.append("'").append(data.get(code).getName()).append("', ");
+                    buf.append(data.get(code).getPreClose()).append(", '");
+                    buf.append(time).append("')");
+                    manager.insertOrUpdate(buf.toString());
+                }
+            }
+            logger.info("Synchronize Quote Table completed!!!");
+            logger.info("elapse time: " + (new Date().getTime() - start) / 1000 + "s");
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+    }
+
+    private boolean isTodaySynced() {
+        Calendar today = Calendar.getInstance();
+        today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE));
+        today.add(Calendar.DATE, 1);
+        String sql = "select max(modified) modified from quotes";
+        ResultSet set = null;
+        try {
+            set = manager.query(sql);
+            if (set.next()) {
+                Calendar lastModified = Calendar.getInstance();
+                lastModified.setTime(set.getDate("modified"));
+
+            } else {
+                return false;
+            }
+        }
+        catch (SQLException e) {
+            logger.error(e);
+        }
+        return true;
+    }
+
 
     public void stopThread() {
         logger.info("Stop running DBFReaderThread....");
