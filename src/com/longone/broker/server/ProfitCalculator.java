@@ -138,7 +138,8 @@ public final class ProfitCalculator {
                 position.setStockValue(stockValue.doubleValue());
 
                 totalStockValue = totalStockValue.add(stockValue);
-                logger.debug(position.getCurrentPrice() + ", " + position.getCostPrice() + ", " + position.getCode() + ", " + position.getProfit());
+                logger.debug("current Price: " + position.getCurrentPrice() + ", cost: " + position.getCostPrice()
+                        + ", code: " + position.getCode() + ", profit: " + position.getProfit());
                 list.add(position);
             }
         } catch (SQLException e) {
