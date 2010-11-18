@@ -46,7 +46,7 @@ public class DBFReaderThread implements Runnable {
             try {
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
-                logger.error(e);
+                logger.error("DBFReader thread is interrupted during sleep", e);
             }
             count++;
         }
@@ -102,7 +102,7 @@ public class DBFReaderThread implements Runnable {
             logger.info("Synchronize Quote Table completed!!!");
             logger.info("elapse time: " + (new Date().getTime() - start) / 1000 + "s");
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
     }
 
@@ -123,7 +123,7 @@ public class DBFReaderThread implements Runnable {
             }
         }
         catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return true;
     }
@@ -153,11 +153,11 @@ public class DBFReaderThread implements Runnable {
                 data.put(code, populateStockPrice(nameField, record, fields));
             }
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("", e);
         } catch (CorruptedTableException e) {
-            logger.error(e);
+            logger.error("", e);
         } catch (DbfLibException e) {
-            logger.error(e);
+            logger.error("", e);
         }
     }
 

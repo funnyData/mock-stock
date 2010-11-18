@@ -96,7 +96,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 user.setPrincipal(set.getDouble("principal"));
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return user;
     }
@@ -116,7 +116,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 return SYS_ERROR;
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
             return SYS_ERROR;
         }
         return "密码更新成功！！！";
@@ -141,7 +141,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 list.add(deal);
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         DealLog[] logs = new DealLog[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -173,7 +173,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 }
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return null;
     }
@@ -306,7 +306,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 return SYS_ERROR;
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
             return SYS_ERROR;
         }
         DecimalFormat decimalfmt = new DecimalFormat("#,##0.00");
@@ -331,7 +331,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 position.setProfit(set.getDouble("profit"));
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return position;
     }
@@ -345,7 +345,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
                 return set.getDouble("principal");
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         logger.error(username + "not found....");
         return 0;
