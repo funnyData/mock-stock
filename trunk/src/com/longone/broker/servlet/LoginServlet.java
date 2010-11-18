@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             logger.error(e);
         }
-
+        logger.info("someone login as dhzq from OA.....");
         response.sendRedirect(request.getContextPath() + "/MockStock.html?mockstock=1");
     }
 }
