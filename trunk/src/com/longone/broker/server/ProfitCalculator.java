@@ -112,10 +112,10 @@ public final class ProfitCalculator {
                 double cost = set.getDouble("cost");
                 position.setCostPrice(cost);
 
-                logger.error(code);
                 StockPrice stockPrice = DBFReaderThread.getData().get(code);
 
                 if (stockPrice.getPrice() <= 0) {
+                    logger.info(code + " stock price less than or equal to zero.....");
                     stockPrice.setPrice(stockPrice.getPreClose());
                 }
 
