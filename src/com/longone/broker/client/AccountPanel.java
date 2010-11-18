@@ -14,11 +14,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class AccountPanel extends VerticalPanel implements Initializable {
 
     private static final String[] HEADERS = {"初始资金", "可用资金", "股票市值", "总市值", "盈亏总额", "盈亏比例", "股票持仓比例"};
-    private Grid grid = new Grid(2, HEADERS.length);
+    private Grid grid = null;
     private Button button = new Button("刷新");
     private StockServiceAsync stockSvc;
 
     public AccountPanel(StockServiceAsync stockSvc) {
+        grid = new Grid(2, HEADERS.length);
+        Util.createGridHeader(grid, HEADERS);
         this.stockSvc = stockSvc;
         this.add(button);
         this.add(grid);
@@ -28,16 +30,6 @@ public class AccountPanel extends VerticalPanel implements Initializable {
                 loadData();
             }
         });
-        createGridHeader();
-    }
-
-    private void createGridHeader() {
-        for (int i = 0; i < HEADERS.length; i++) {
-            grid.setWidget(0, i, new Label(HEADERS[i]));
-        }
-        grid.getRowFormatter().setStyleName(0, "watchListHeader");
-        grid.addStyleName("watchList");
-        grid.setCellPadding(6);
     }
 
     private void loadData() {
@@ -63,32 +55,47 @@ public class AccountPanel extends VerticalPanel implements Initializable {
     }
 
     private void populateGridData(AccountInfo info) {
+        Util.removeGridData(grid);
+        grid.resizeRows(2);
+        int row = 1;
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
-        grid.setWidget(1, 0, new Label(fmt.format(info.getIntialPrincipal())));
-        grid.setWidget(1, 1, new Label(fmt.format(info.getLeftCapitical())));
-        grid.setWidget(1, 2, new Label(fmt.format(info.getStockValue())));
-        grid.setWidget(1, 3, new Label(fmt.format(info.getTotalValue())));
-        grid.setWidget(1, 4, new Label(fmt.format(info.getProfit())));
-        grid.setWidget(1, 5, new Label(fmt.format(info.getProfitPct()) + "%"));
+        grid.setWidget(row, 0, new Label(info.getDisplayName()));
+        grid.setWidget(row, 1, new Label(fmt.format(info.getIntialPrincipal())));
+        grid.getCellFormatter().addStyleName(row, 1, "numericCell");
+        grid.setWidget(row, 2, new Label(fmt.format(info.getLeftCapitical())));
+        grid.getCellFormatter().addStyleName(row, 2, "numericCell");
+        grid.setWidget(row, 3, new Label(fmt.format(info.getStockValue())));
+        grid.getCellFormatter().addStyleName(row, 3, "numericCell");
+        grid.setWidget(row, 4, new Label(fmt.format(info.getTotalValue())));
+        grid.getCellFormatter().addStyleName(row, 4, "numericCell");
+        grid.setWidget(row, 5, new Label(fmt.format(info.getProfit())));
+        grid.getCellFormatter().addStyleName(row, 5, "numericCell");
+        grid.setWidget(row, 6, new Label(fmt.format(info.getProfitPct()) + "%"));
+        grid.getCellFormatter().addStyleName(row, 6, "numericCell");
         if (info.getProfit() > 0) {
-            grid.getCellFormatter().removeStyleName(1, 4, "negativeChange");
-            grid.getCellFormatter().addStyleName(1, 4, "positiveChange");
-            grid.getCellFormatter().removeStyleName(1, 5, "negativeChange");
-            grid.getCellFormatter().addStyleName(1, 5, "positiveChange");
+
+            grid.getCellFormatter().removeStyleName(row, 5, "negativeChange");
+            grid.getCellFormatter().addStyleName(row, 5, "positiveChange");
+            grid.getCellFormatter().removeStyleName(row, 6, "negativeChange");
+            grid.getCellFormatter().addStyleName(row, 6, "positiveChange");
         } else if (info.getProfit() < 0) {
-            grid.getCellFormatter().removeStyleName(1, 4, "positiveChange");
-            grid.getCellFormatter().addStyleName(1, 4, "negativeChange");
-            grid.getCellFormatter().removeStyleName(1, 5, "positiveChange");
-            grid.getCellFormatter().addStyleName(1, 5, "negativeChange");
+            grid.getCellFormatter().removeStyleName(row, 5, "positiveChange");
+            grid.getCellFormatter().addStyleName(row, 5, "negativeChange");
+            grid.getCellFormatter().removeStyleName(row, 6, "positiveChange");
+            grid.getCellFormatter().addStyleName(row, 6, "negativeChange");
         } else {
-            grid.getCellFormatter().removeStyleName(1, 4, "positiveChange");
-            grid.getCellFormatter().removeStyleName(1, 4, "negativeChange");
-            grid.getCellFormatter().removeStyleName(1, 5, "positiveChange");
-            grid.getCellFormatter().removeStyleName(1, 5, "negativeChange");
+            grid.getCellFormatter().removeStyleName(row, 5, "positiveChange");
+            grid.getCellFormatter().removeStyleName(row, 5, "negativeChange");
+            grid.getCellFormatter().removeStyleName(row, 6, "positiveChange");
+            grid.getCellFormatter().removeStyleName(row, 6, "negativeChange");
         }
+
         if (info.getTotalValue() != 0) {
-            grid.setWidget(1, 6, new Label(fmt.format(100.0 * info.getStockValue() / info.getTotalValue()) + "%"));
+            grid.setWidget(row, 7, new Label(fmt.format(100.0 * info.getStockValue() / info.getTotalValue()) + "%"));
+        } else {
+            grid.setWidget(row, 7, new Label("--"));
         }
+        grid.getCellFormatter().addStyleName(row, 7, "numericCell");
     }
 
 

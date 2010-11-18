@@ -10,12 +10,14 @@ import com.google.gwt.user.client.ui.*;
 
 
 public class TransHistoryPanel extends VerticalPanel implements Initializable{
-    private Grid grid = new Grid();
+    private Grid grid = null;
     private Button button = new Button("刷新");
     private static String[] HEADERS = {"股票代码", "股票简称", "买卖方向", "成交价格", "数量", "佣金", "交易时间"};
     private StockServiceAsync stockSvc;
 
     public TransHistoryPanel(StockServiceAsync stockSvc) {
+        grid = new Grid(1, HEADERS.length);
+        Util.createGridHeader(grid, HEADERS);
         this.stockSvc = stockSvc;
         this.add(button);
         this.add(grid);
@@ -25,7 +27,6 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
                 loadData();
             }
         });
-        grid.setCellPadding(6);
     }
 
     private void loadData() {
@@ -51,13 +52,8 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
     }
 
     private void populateGrid(DealLog[] logs) {
-
-        grid.resize(logs.length + 1, 7);
-        for (int i = 0; i < HEADERS.length; i++) {
-            grid.setWidget(0, i, new Label(HEADERS[i]));
-        }
-        grid.getRowFormatter().setStyleName(0, "watchListHeader");
-        grid.addStyleName("watchList");
+        Util.removeGridData(grid);
+        grid.resize(logs.length + 1, HEADERS.length);
 
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
         for(int row=1; row<=logs.length;row++) {
@@ -74,10 +70,12 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
                 grid.getCellFormatter().addStyleName(row, 2, "negativeChange");
             }
             grid.setWidget(row, 3, new Label(fmt.format(deal.getPrice())));
+            grid.getCellFormatter().addStyleName(row, 3, "numericCell");
             grid.setWidget(row, 4, new Label(fmt.format(deal.getAmount())));
+            grid.getCellFormatter().addStyleName(row, 4, "numericCell");
             grid.setWidget(row, 5, new Label(fmt.format(deal.getCommission())));
+            grid.getCellFormatter().addStyleName(row, 5, "numericCell");
             grid.setWidget(row, 6, new Label(deal.getCreated()));
-            grid.getRowFormatter().addStyleName(row, "watchListNumericColumn");
         }
     }
 
