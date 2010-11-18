@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute(StockServiceImpl.USER, user);
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         logger.info("someone login as dhzq from OA.....");
         response.sendRedirect(request.getContextPath() + "/MockStock.html?mockstock=1");

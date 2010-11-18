@@ -55,7 +55,7 @@ public final class ProfitCalculator {
                 list.add(createUser(set));
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return list;
     }
@@ -142,7 +142,7 @@ public final class ProfitCalculator {
                 list.add(position);
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         StockPosition[] positions = new StockPosition[list.size()];
         for (int i = 0; i < list.size(); i++) {

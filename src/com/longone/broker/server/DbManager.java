@@ -42,7 +42,7 @@ public final class DbManager {
         try {
             Class.forName((String) prop.get("dbDriver"));
         } catch (Exception e) {
-            logger.error(e);
+            logger.error("", e);
         }
     }
 
@@ -63,7 +63,7 @@ public final class DbManager {
                 return DriverManager.getConnection(url, userName, password);
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("", e);
         }
         return null;
     }

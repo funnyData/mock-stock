@@ -86,7 +86,7 @@ public class ContextListener implements ServletContextListener,
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            logger.error(e);
+            logger.error("", e);
         }
     }
 
