@@ -21,7 +21,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
     private static final Logger logger = Logger.getLogger(StockServiceImpl.class);
     private static final double COMMISSION_PERCENTAGE = 0.003;
     private static final String SYS_ERROR = "系统出错，请联系管理员";
-    private static final String USER = "USER_SESSION_ATTR";
+    public static final String USER = "USER_SESSION_ATTR";
 
     public StockPosition[] getStockPositions() {
         User user = getCurrentUser();
@@ -85,6 +85,9 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
     private User getCurrentUser() {
         HttpSession session = this.getThreadLocalRequest().getSession();
         User user = (User) session.getAttribute(USER);
+        if(user == null){
+            return user;
+        }
         String sql = "select principal from users where username='" + user.getUsername() + "'";
         DbManager manager = InitServlet.getManager();
         try {
