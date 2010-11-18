@@ -3,33 +3,28 @@
 body {
     padding: 10px;
     font: "微软雅黑", "宋体";
-    font-size: 10pt;
+    font-size: 9pt;
 }
 
-/* stock list header row */
-.watchListHeader {
+.tableHeader {
     background-color: #2062B8;
     color: white;
-    font-style: italic;
-
+    font-weight:bold;
+    font: "微软雅黑", "宋体";
+    font-size: 10pt;
+    text-align: center;
 }
 
-/* stock list flex table */
-.watchList {
+.tableList {
     border: 1px solid silver;
     padding: 2px;
     margin-bottom: 6px;
 }
 
-/* stock list Price and Change fields */
-.watchListNumericColumn {
+.numericCell {
     text-align: right;
     width: 85px;
-}
-
-/* stock list Remove column */
-.watchListRemoveColumn {
-    text-align: center;
+    padding-right:4px;
 }
 
 /* Add Stock panel */

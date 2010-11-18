@@ -15,7 +15,7 @@ public class PositionPanel extends VerticalPanel implements Initializable {
     private static final String[] TABLE_COLUMN = {"代码", "名称", "数量", "成本价格", "产生佣金", "股票现价",
             "浮动盈亏", "浮动盈亏比例", "个股市值", "个股持仓比例"};
 
-    private FlexTable stocksFlexTable = new FlexTable();
+    private Grid stocksFlexTable = null;
 
     private TextBox symbolBox = new TextBox();
     private TextBox amountBox = new TextBox();
@@ -32,7 +32,8 @@ public class PositionPanel extends VerticalPanel implements Initializable {
 
     public PositionPanel(StockServiceAsync stockSvc) {
         this.stockSvc = stockSvc;
-        createPositionHeader();
+        stocksFlexTable = new Grid(1, TABLE_COLUMN.length);
+        Util.createGridHeader(stocksFlexTable, TABLE_COLUMN);
 
         // Assemble Add Stock panel.
         HorizontalPanel operatePanel = new HorizontalPanel();
@@ -83,18 +84,6 @@ public class PositionPanel extends VerticalPanel implements Initializable {
                 dealStock(false);
             }
         });
-    }
-
-    private void createPositionHeader() {
-        // Create table for stock Positions.
-        for (int i = 0; i < TABLE_COLUMN.length; i++) {
-            stocksFlexTable.setText(0, i, TABLE_COLUMN[i]);
-            stocksFlexTable.getCellFormatter().addStyleName(0, i, "watchListNumericColumn");
-        }
-
-        // Add styles to elements in the stock list table.
-        stocksFlexTable.getRowFormatter().addStyleName(0, "watchListHeader");
-        stocksFlexTable.addStyleName("watchList");
     }
 
     private void dealStock(boolean isBuy) {
@@ -189,8 +178,9 @@ public class PositionPanel extends VerticalPanel implements Initializable {
     }
 
     private void updateTable(StockPosition[] positions) {
-        stocksFlexTable.removeAllRows();
-        createPositionHeader();
+        Util.removeGridData(stocksFlexTable);
+        stocksFlexTable.resizeRows(positions.length+1);
+
         for (int i = 0; i < positions.length; i++) {
             Util.addPositionRow(stocksFlexTable, positions[i], i + 1);
         }
