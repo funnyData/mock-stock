@@ -73,6 +73,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
     private void insertRankTableRow(int row, final AccountInfo info) {
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00");
         rankGrid.setWidget(row, 0, new Label(info.getDisplayName()));
+        rankGrid.getCellFormatter().addStyleName(row, 0, "textCell");            
         rankGrid.setWidget(row, 1, new Label(fmt.format(info.getIntialPrincipal())));
         rankGrid.getCellFormatter().addStyleName(row, 1, "numericCell");
         rankGrid.setWidget(row, 2, new Label(fmt.format(info.getLeftCapitical())));
@@ -207,8 +208,11 @@ public class ManagePanel extends VerticalPanel implements Initializable {
         for (int row = 1; row <= logs.length; row++) {
             final DealLog deal = logs[row - 1];
             transGrid.setWidget(row, 0, new Label(deal.getCode()));
+            transGrid.getCellFormatter().addStyleName(row, 0, "textCell");
             transGrid.setWidget(row, 1, new Label(deal.getName()));
+            transGrid.getCellFormatter().addStyleName(row, 1, "textCell");
             transGrid.setWidget(row, 2, new Label(deal.getBs()));
+            transGrid.getCellFormatter().addStyleName(row, 2, "textCell");
             if ("买入".equals(deal.getBs())) {
                 transGrid.getCellFormatter().removeStyleName(row, 2, "negativeChange");
                 transGrid.getCellFormatter().addStyleName(row, 2, "positiveChange");
