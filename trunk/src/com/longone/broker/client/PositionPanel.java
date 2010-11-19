@@ -184,9 +184,10 @@ public class PositionPanel extends VerticalPanel implements Initializable {
         for (int i = 0; i < positions.length; i++) {
             Util.addPositionRow(stocksFlexTable, positions[i], i + 1);
         }
-        // Display timestamp showing last refresh.
-        lastUpdatedLabel.setText("最后更新时间 : "
-                + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.ISO_8601).format(new Date()));
+        // Display timestamp showing last refresh
+        String time = "最后更新时间: " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_SHORT).format(new Date()) +  " "
+                + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.TIME_MEDIUM).format(new Date());
+        lastUpdatedLabel.setText(time);
     }
 
     public void initialize() {

@@ -22,7 +22,7 @@ public class LoginPanel extends DecoratorPanel {
         // Create a table to layout the form options
         FlexTable layout = new FlexTable();
         layout.setCellSpacing(6);
-        layout.setCellPadding(2);
+        layout.setCellPadding(3);
         // Add some standard form options
         layout.setText(1, 0, "用户名:");
         layout.setWidget(1, 1, usernameBox);
@@ -86,7 +86,7 @@ public class LoginPanel extends DecoratorPanel {
 
     private DecoratedTabPanel createTabPanel(User user) {
         final DecoratedTabPanel tabPanel = new DecoratedTabPanel();
-        tabPanel.setWidth("95%");
+        tabPanel.setWidth("900px");
         tabPanel.setAnimationEnabled(true);
         if (!"dhzq".equals(user.getUsername())) {
             tabPanel.add(new PositionPanel(stockSvc), "持仓");

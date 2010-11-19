@@ -57,11 +57,14 @@ public final class Util {
     }
 
     public static void createGridHeader(Grid grid, String[] headers) {
+        createGridHeader(grid, headers, "tableList");        
+    }
+    public static void createGridHeader(Grid grid, String[] headers, String styleName) {
         for (int i = 0; i < headers.length; i++) {
             grid.setWidget(0, i, new Label(headers[i]));
         }
         grid.getRowFormatter().addStyleName(0, "tableHeader");
-        grid.addStyleName("tableList");
+        grid.addStyleName(styleName);
         grid.setCellPadding(4);
     }
 
