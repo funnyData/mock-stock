@@ -196,7 +196,7 @@ public class ManagePanel extends VerticalPanel implements Initializable {
                 }
                 removeGrids();
                 createTransTable(logs);
-                transUser = new Label("\"" + displayName + "\"的交易记录如下：");
+                transUser = new Label("\"" + displayName + "\"交易记录如下：");
                 getItself().add(transUser);
                 getItself().add(transGrid);
             }

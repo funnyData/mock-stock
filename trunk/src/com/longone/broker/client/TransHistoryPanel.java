@@ -61,9 +61,9 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
             grid.setWidget(row, 0, new Label(deal.getCode()));
             grid.getCellFormatter().addStyleName(row, 0, "textCell");
             grid.setWidget(row, 1, new Label(deal.getName()));
-            grid.getCellFormatter().removeStyleName(row, 1, "textCell");
+            grid.getCellFormatter().addStyleName(row, 1, "textCell");
             grid.setWidget(row, 2, new Label(deal.getBs()));
-            grid.getCellFormatter().removeStyleName(row, 2, "textCell");
+            grid.getCellFormatter().addStyleName(row, 2, "textCell");
             if("买入".equals(deal.getBs())) {
                 grid.getCellFormatter().removeStyleName(row, 2, "negativeChange");
                 grid.getCellFormatter().addStyleName(row, 2, "positiveChange");
@@ -79,7 +79,7 @@ public class TransHistoryPanel extends VerticalPanel implements Initializable{
             grid.setWidget(row, 5, new Label(fmt.format(deal.getCommission())));
             grid.getCellFormatter().addStyleName(row, 5, "numericCell");
             grid.setWidget(row, 6, new Label(deal.getCreated()));
-            grid.getCellFormatter().removeStyleName(row, 6, "textCell");
+            grid.getCellFormatter().addStyleName(row, 6, "textCell");
         }
     }
 
