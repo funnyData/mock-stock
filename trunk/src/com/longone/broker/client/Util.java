@@ -9,7 +9,9 @@ public final class Util {
     public static void addPositionRow(Grid table, StockPosition position, int row) {
         NumberFormat fmt = NumberFormat.getFormat("#,##0.00;#,##0.00");
         table.setText(row, 0, position.getCode());
+        table.getCellFormatter().addStyleName(row, 0, "textCell");
         table.setText(row, 1, position.getName());
+        table.getCellFormatter().addStyleName(row, 1, "textCell");
         table.setText(row, 2, String.valueOf(position.getAmount()));
         table.getCellFormatter().setStyleName(row, 2, "numericCell");
         table.setText(row, 3, fmt.format(position.getCostPrice()));
