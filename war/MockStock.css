@@ -1,34 +1,52 @@
 /* Formatting specific to the StockWatcher application */
-
-body {
-    padding: 10px;
-    font: "微软雅黑", "宋体";
-    font-size: 9pt;
-}
-
-.tableHeader {
-    background-color: #2062B8;
-    color: white;
-    font-weight:bold;
+.gwt-Label {
     font: "微软雅黑", "宋体";
     font-size: 10pt;
-    text-align: center;
+}
+
+button.gwt-Button, #wrapper button.gwt-Button {
+    background: dodgerblue url(shade.png) repeat-x;
+    color: white;
+    width: 80px;
+    vertical-align: baseline;
+    font-size: 10pt;
+}
+
+.small-label {
+    font-size: small;
 }
 
 .tableList {
     border: 1px solid silver;
     padding: 2px;
     margin-bottom: 6px;
+    border-spacing: 1px;
+    width: 900px;
+}
+
+.tableList2 {
+    border: 1px solid silver;
+    padding: 2px;
+    margin-bottom: 6px;
+    border-spacing: 1px;
+    width: 700px;
+}
+
+
+.tableHeader {
+    background-color: #2062B8;
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 
 .numericCell {
     text-align: right;
-    width: 85px;
-    padding-right:4px;
+    padding-left: 8px;
+    padding-right: 4px;
 }
 
 .textCell {
-    width: 80px;
     text-align: center;
 }
 
