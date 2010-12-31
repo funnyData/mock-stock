@@ -267,7 +267,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
             positionsSql.append(newCost).append(", commission=");
             positionsSql.append(newCommission).append(", profit=");
             positionsSql.append(profit).append(", modified='");
-            positionsSql.append(now).append("' where code='");
+            positionsSql.append(now).append("' where amount > 0 and code='");
             positionsSql.append(position.getCode()).append("' and userid='");
             positionsSql.append(username).append("'");
         } else {
