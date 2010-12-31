@@ -320,7 +320,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         position.setCode(code);
         position.setAmount(0);
 
-        String sql = "select * from positions where userid = '" + username + "' and code = '" + code + "'";
+        String sql = "select * from positions where userid = '" + username + "' and code = '" + code + "' order by id desc";
         DbManager manager = InitServlet.getManager();
         try {
             ResultSet set = manager.query(sql);
@@ -360,82 +360,21 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         prop.put("dbPwd", "sa");
 
         String[][] data0 = {
-                {"000733", "振华科技", "9000", "12.88"},
-                {"000547", "闽福发A", "5000", "7.97"},
-                {"002006", "精工科技", "2500", "7.13"},
-                {"000968", "煤气化", "10000", "20.58"},
-                {"000407", "胜利股份", "30000", "7.65"},
-                {"000630", "铜陵有色", "4000", "28.29"},
-                {"000060", "中金岭南", "5000", "25.18"}
+                {"600178", "东安动力", "10000", "11.92", "true"},
+                {"600439", "瑞贝卡", "20000", "10.93", "true"},
+                {"000968", "煤气化", "10000", "20.68", "true"},
+                {"000965", "天保基建", "15000", "13.32", "true"},
+                {"000407", "胜利股份", "10000", "7.68", "true"},
+                {"601877", "正泰电器", "3000", "22.94", "true"},
+                {"600439", "瑞贝卡  ", "5000", "11.7", "true"},
+                {"600439", "瑞贝卡  ", "5000", "12.31", "false"},
+                {"000938", "紫光股份", "5000", "15.69", "true"},
+                {"600439", "瑞贝卡  ", "5000", "14.1", "false"},
+                {"600439", "瑞贝卡  ", "5000", "13.5", "true"},
+                {"000407", "胜利股份", "10000", "8.06", "false"},
+                {"000938", "紫光股份", "5000", "15.72", "true"}
         };
-        execute(prop, data0, "lczx");
-
-//凯西营业部,kxxl
-
-        String[][] data1 = {
-                {"000002", "万科A", "20000", "9.854142572"},
-                {"600581", "八一钢铁", "15000", "13.95"},
-                {"600129", "太极集团", "20000", "12.02"},
-                {"002162", "斯米克", "10000", "15.31"},
-                {"600702", "沱牌曲酒", "10000", "22.78"},
-                {"600741", "华域汽车", "10000", "13.69"}
-        };
-
-//剩余资金, "29242.2"
-        execute(prop, data1, "kxxl");
-
-
-//周山路,zsl
-
-        String[][] data2 = {
-                {"600178", "东安动力", "10000", "11.92"},
-                {"600439", "瑞贝卡", "20000", "10.93"},
-                {"000968", "煤气化", "10000", "20.68"},
-                {"000965", "天保基建", "15000", "13.32"},
-                {"000407", "胜利股份", "10000", "7.68"},
-                {"601877", "正泰电器", "3000", "22.94"}
-        };
-
-//剩余资金, "186959.74"
-        execute(prop, data2, "zsl");
-
-
-//西苑路,xyl
-        String[][] data3 = {
-                {"000968", "煤气化", "10000", "20.78"},
-                {"000407", "胜利股份", "30000", "7.63"},
-                {"600405", "动力源", "10000", "13.21"},
-                {"000088", "盐田港", "10000", "7.138"},
-                {"000630", "铜陵有色", "4000", "28.16"},
-                {"000060", "中金岭南", "10000", "24.90"}
-        };
-
-//剩余资金, "339113.5"
-        execute(prop, data3, "xyl");
-
-
-//建设西路,jsxl
-        String[][] data4 = {
-                {"600590", "泰豪科技", "10000", "14.08"},
-                {"600967", "北方创业", "10000", "16.71"},
-                {"600030", "中信证券", "10000", "16.73"},
-                {"000060", "中金岭南", "5000", "25.00"}
-        };
-//剩余资金 "541852.2"
-        execute(prop, data4, "jsxl");
-
-
-//中州东路,zzdl
-        String[][] data5 = {
-                {"000968", "煤气化", "5000", "20.29"},
-                {"000407", "胜利股份", "20000", "7.63"},
-                {"000002", "万科A", "30000", "9.59"},
-                {"000060", "中金岭南", "5000", "24.95"}
-        };
-
-//剩余资金, "480645.2"
-        execute(prop, data5, "zzdl");
-
+        execute(prop, data0, "test");
     }
 
     private static void execute(Properties prop, String[][] data, String username) {
@@ -446,7 +385,7 @@ public class StockServiceImpl extends RemoteServiceServlet implements StockServi
         DbManager manager = DbManager.getInstance(prop);
         InitServlet.setManager(manager);
         for (String[] record : data) {
-            String result = service.doDeal(record[0], record[1], Double.parseDouble(record[3]), Integer.parseInt(record[2]), true, username);
+            String result = service.doDeal(record[0], record[1], Double.parseDouble(record[3]), Integer.parseInt(record[2]), Boolean.parseBoolean(record[4]), username);
             System.out.println(result);
         }
         System.out.println("-----------------");
