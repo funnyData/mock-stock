@@ -82,3 +82,21 @@ mvn package       # generate a .war package ready to deploy
 
 For more information about other available goals, read maven and gwt-maven-plugin 
 documentation (http://maven.apache.org, http://mojo.codehaus.org/gwt-maven-plugin)  
+
+
+
+
+
+2011-04-14
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+002137，10送2
+
+165	002137	实 益 达	15000	11.58	519.75	-173769.75	lczx	2011-03-25 10:18:01.000	2011-03-25 10:18:01.000
+166	002137	实 益 达	26000	11.64	904.86	-302524.86	lyndj	2011-03-25 10:24:59.000	2011-04-12 14:40:39.000
+167	002137	实 益 达	15000	11.56	518.63	-173393.63	zzdl	2011-03-25 10:47:07.000	2011-03-25 10:55:22.000
+168	002137	实 益 达	15000	11.82	530.1	-177230.1	jsxl	2011-03-25 13:00:31.000	2011-03-25 13:00:31.000
+
+
+update positions set amount=amount*1.2, cost=cost/1.2
+where amount > 0 and code = '002137'
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
