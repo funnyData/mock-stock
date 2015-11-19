@@ -1,0 +1,1 @@
+implement a mock stock website using GWT 2.1
